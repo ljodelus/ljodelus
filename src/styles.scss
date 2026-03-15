@@ -3,4 +3,16 @@
 // Import Font Awesome
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 
+/* ── Contact form — field focus ring ──────────────────────────── */
+#contact input:focus,
+#contact textarea:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-500) 20%, transparent);
+}
+
+/* ── Contact form — placeholder color ───────────────────────────── */
+#contact input::placeholder,
+#contact textarea::placeholder {
+  color: var(--color-slate-500);
+}
+
 

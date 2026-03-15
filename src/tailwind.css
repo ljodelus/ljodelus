@@ -1,1 +1,35 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
+
+/*
+ * Semantic color palette
+ * - primary   : lime  (brand green — page background at -50, accents at -400/500/600)
+ * - accent : slate (dark blue — alternating section backgrounds at -50, dark bg at -800/900)
+ * - warning   : red   (form validation errors & required fields)
+ *
+ * Using @theme inline so utilities reference CSS custom-properties at runtime,
+ * making it easy to swap the underlying colour just by editing the var() value.
+ */
+@theme inline {
+  /* Single page-wide font */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Primary – lime */
+  --color-primary-50:  var(--color-lime-50);   /* ← page general background  */
+  --color-primary-100: var(--color-lime-100);
+  --color-primary-200: var(--color-lime-200);
+  --color-primary-400: var(--color-lime-400);
+  --color-primary-500: var(--color-lime-500);  /* ← active borders, icons, links */
+  --color-primary-600: var(--color-lime-600);
+  --color-primary-700: var(--color-lime-700);
+  --color-primary-800: var(--color-lime-800);
+
+  /* accent – slate */
+  --color-accent-50:  var(--color-slate-50);   /* ← alternating section backgrounds */
+  --color-accent-800: var(--color-slate-800);
+  --color-accent-900: var(--color-slate-900);
+
+  /* Warning – red */
+  --color-warning-500: var(--color-red-500);
+  --color-warning-600: var(--color-red-600);
+}
+

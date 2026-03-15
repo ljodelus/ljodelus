@@ -1,167 +1,377 @@
-<div class="max-w-[260mm] mx-auto  min-h-screen bg-gray-50 text-gray-800 font-sans selection:bg-lime-200">
+﻿<div class="max-w-[1200px] mx-auto  min-h-screen text-gray-800 font-sans overflow-x-hidden selection:bg-primary-200">
   <!-- NAVIGATION BAR -->
-  <nav class="sticky top-0 z-50 bg-lime-500 shadow-md">
-    <div class="max-w-[260mm] mx-auto px-6 py-4 relative">
-      <div class="flex items-center justify-between">
-        <!-- Logo/Nom -->
-        <button
-          (click)="scrollToTop()"
-          class="text-white font-bold text-xl hover:text-lime-100 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-lime-500 rounded-sm px-2 py-1"
-          [attr.aria-label]="'Back to top'">
-          {{ name() }}
-        </button>
+  <nav
+    class="fixed top-0 left-0 right-0 z-50 bg-primary-500 shadow-md h-[60px]"
+    aria-label="Site navigation">
+    <div class="max-w-[1200px] mx-auto px-6 h-full flex items-center justify-between gap-4">
 
-        <!-- Burger button (always visible) -->
-        <button
-          (click)="toggleMobileMenu()"
-          class="text-white hover:text-lime-100 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-lime-500 rounded-sm p-2"
-          [attr.aria-label]="mobileMenuOpen() ? 'Close menu' : 'Open menu'"
-          [attr.aria-expanded]="mobileMenuOpen()">
-          <i [class]="mobileMenuOpen() ? 'fas fa-times text-2xl' : 'fas fa-bars text-2xl'"></i>
-        </button>
-      </div>
+      <!-- ── Logo ─────────────────────────────────────────────── -->
+      <button
+        (click)="scrollToTop()"
+        class="flex items-center gap-2 shrink-0 rounded-sm px-1
+               focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-500"
+        [attr.aria-label]="'Back to top — ' + name()">
+        <!-- Round initials icon -->
+        <span
+          class="w-9 h-9 rounded-full bg-accent-900 text-primary-400 flex items-center justify-center
+                 text-sm font-bold shrink-0 select-none"
+          aria-hidden="true">
+          {{ initials() }}
+        </span>
+        <!-- Name: main word (white) · accent word (dark) -->
+        <span class="text-white font-bold text-lg leading-none">{{ firstName() }}</span><span
+          class="text-accent-900 font-bold text-lg leading-none">{{ lastName() }}</span>
+      </button>
 
-      <!-- Dropdown menu (absolute position) -->
-      @if (mobileMenuOpen()) {
-        <div class="absolute left-0 right-0 top-full bg-lime-500 shadow-lg border-t border-lime-400 animate-slideDown">
-          <ul class="flex flex-col gap-2 px-6 py-4">
-            <li>
-              <button
-                (click)="scrollToSection(aboutSection().id)"
-                class="w-full text-left text-white hover:bg-lime-600 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
-                [attr.aria-label]="'Navigate to ' + aboutSection().title">
-                <i class="fas fa-user mr-3 w-5"></i>
-                {{ aboutSection().title }}
-              </button>
-            </li>
-            <li>
-              <button
-                (click)="scrollToSection(skillsSection().id)"
-                class="w-full text-left text-white hover:bg-lime-600 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
-                [attr.aria-label]="'Navigate to ' + skillsSection().title">
-                <i class="fas fa-code mr-3 w-5"></i>
-                {{ skillsSection().title }}
-              </button>
-            </li>
-            <li>
-              <button
-                (click)="scrollToSection(experienceSection().id)"
-                class="w-full text-left text-white hover:bg-lime-600 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
-                [attr.aria-label]="'Navigate to ' + experienceSection().title">
-                <i class="fas fa-briefcase mr-3 w-5"></i>
-                {{ experienceSection().title }}
-              </button>
-            </li>
-            <li>
-              <button
-                (click)="scrollToSection(projectsSection().id)"
-                class="w-full text-left text-white hover:bg-lime-600 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
-                [attr.aria-label]="'Navigate to ' + projectsSection().title">
-                <i class="fas fa-folder-open mr-3 w-5"></i>
-                {{ projectsSection().title }}
-              </button>
-            </li>
-            <li>
-              <button
-                (click)="scrollToSection(servicesSection().id)"
-                class="w-full text-left text-white hover:bg-lime-600 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
-                [attr.aria-label]="'Navigate to ' + servicesSection().title">
-                <i class="fas fa-hands-helping mr-3 w-5"></i>
-                {{ servicesSection().title }}
-              </button>
-            </li>
-            <li>
-              <button
-                (click)="scrollToSection(testimonialsSection().id)"
-                class="w-full text-left text-white hover:bg-lime-600 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
-                [attr.aria-label]="'Navigate to ' + testimonialsSection().title">
-                <i class="fas fa-comments mr-3 w-5"></i>
-                {{ testimonialsSection().title }}
-              </button>
-            </li>
-            <li>
-              <button
-                (click)="scrollToSection('contact')"
-                class="w-full text-left text-white hover:bg-lime-600 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
-                [attr.aria-label]="'Navigate to Contact'">
-                <i class="fas fa-envelope mr-3 w-5"></i>
-                Contact
-              </button>
-            </li>
-          </ul>
-        </div>
-      }
+      <!-- ── Desktop links (md+) ──────────────────────────────── -->
+      <ul class="hidden md:flex items-center gap-1 list-none m-0 p-0" role="list">
+        <li>
+          <button
+            (click)="scrollToSection(aboutSection().id)"
+            class="text-white/90 hover:text-accent-900 hover:bg-white/20 font-medium text-sm px-3 py-2
+                   rounded-sm transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset"
+            [attr.aria-label]="'Navigate to ' + aboutSection().title">
+            {{ aboutSection().title }}
+          </button>
+        </li>
+        <li>
+          <button
+            (click)="scrollToSection(skillsSection().id)"
+            class="text-white/90 hover:text-accent-900 hover:bg-white/20 font-medium text-sm px-3 py-2
+                   rounded-sm transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset"
+            [attr.aria-label]="'Navigate to ' + skillsSection().title">
+            {{ skillsSection().title }}
+          </button>
+        </li>
+        <li>
+          <button
+            (click)="scrollToSection(experienceSection().id)"
+            class="text-white/90 hover:text-accent-900 hover:bg-white/20 font-medium text-sm px-3 py-2
+                   rounded-sm transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset"
+            [attr.aria-label]="'Navigate to ' + experienceSection().title">
+            {{ experienceSection().title }}
+          </button>
+        </li>
+        <li>
+          <button
+            (click)="scrollToSection(projectsSection().id)"
+            class="text-white/90 hover:text-accent-900 hover:bg-white/20 font-medium text-sm px-3 py-2
+                   rounded-sm transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset"
+            [attr.aria-label]="'Navigate to ' + projectsSection().title">
+            {{ projectsSection().title }}
+          </button>
+        </li>
+        <li>
+          <button
+            (click)="scrollToSection(servicesSection().id)"
+            class="text-white/90 hover:text-accent-900 hover:bg-white/20 font-medium text-sm px-3 py-2
+                   rounded-sm transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset"
+            [attr.aria-label]="'Navigate to ' + servicesSection().title">
+            {{ servicesSection().title }}
+          </button>
+        </li>
+        <li>
+          <button
+            (click)="scrollToSection(certificationsSection().id)"
+            class="text-white/90 hover:text-accent-900 hover:bg-white/20 font-medium text-sm px-3 py-2
+                   rounded-sm transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset"
+            [attr.aria-label]="'Navigate to ' + certificationsSection().title">
+            {{ certificationsSection().title }}
+          </button>
+        </li>
+        <li>
+          <button
+            (click)="scrollToSection(testimonialsSection().id)"
+            class="text-white/90 hover:text-accent-900 hover:bg-white/20 font-medium text-sm px-3 py-2
+                   rounded-sm transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset"
+            [attr.aria-label]="'Navigate to ' + testimonialsSection().title">
+            {{ testimonialsSection().title }}
+          </button>
+        </li>
+        <li>
+          <button
+            (click)="scrollToSection('contact')"
+            class="text-white/90 hover:text-accent-900 hover:bg-white/20 font-medium text-sm px-3 py-2
+                   rounded-sm transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset"
+            aria-label="Navigate to Contact">
+            Contact
+          </button>
+        </li>
+      </ul>
+
+      <!-- ── Burger button (mobile only) ──────────────────────── -->
+      <button
+        (click)="toggleMobileMenu()"
+        class="md:hidden text-white hover:text-primary-100 transition-colors p-2 rounded-sm
+               focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary-500"
+        [attr.aria-label]="mobileMenuOpen() ? 'Close menu' : 'Open menu'"
+        [attr.aria-expanded]="mobileMenuOpen()">
+        <i [class]="mobileMenuOpen() ? 'fas fa-times text-xl' : 'fas fa-bars text-xl'" aria-hidden="true"></i>
+      </button>
     </div>
+
+    <!-- ── Mobile dropdown (mobile only) ────────────────────── -->
+    @if (mobileMenuOpen()) {
+      <div
+        class="md:hidden absolute left-0 right-0 top-full bg-primary-500 shadow-lg border-t border-primary-400 animate-slideDown"
+        role="menu">
+        <ul class="flex flex-col gap-2 px-6 py-4 list-none" role="list">
+          <li>
+            <button
+              (click)="scrollToSection(aboutSection().id)"
+              class="w-full text-left text-white hover:bg-primary-600 transition-colors font-medium
+                     focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
+              [attr.aria-label]="'Navigate to ' + aboutSection().title">
+              <i class="fas fa-user mr-3 w-5" aria-hidden="true"></i>
+              {{ aboutSection().title }}
+            </button>
+          </li>
+          <li>
+            <button
+              (click)="scrollToSection(skillsSection().id)"
+              class="w-full text-left text-white hover:bg-primary-600 transition-colors font-medium
+                     focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
+              [attr.aria-label]="'Navigate to ' + skillsSection().title">
+              <i class="fas fa-code mr-3 w-5" aria-hidden="true"></i>
+              {{ skillsSection().title }}
+            </button>
+          </li>
+          <li>
+            <button
+              (click)="scrollToSection(experienceSection().id)"
+              class="w-full text-left text-white hover:bg-primary-600 transition-colors font-medium
+                     focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
+              [attr.aria-label]="'Navigate to ' + experienceSection().title">
+              <i class="fas fa-briefcase mr-3 w-5" aria-hidden="true"></i>
+              {{ experienceSection().title }}
+            </button>
+          </li>
+          <li>
+            <button
+              (click)="scrollToSection(projectsSection().id)"
+              class="w-full text-left text-white hover:bg-primary-600 transition-colors font-medium
+                     focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
+              [attr.aria-label]="'Navigate to ' + projectsSection().title">
+              <i class="fas fa-folder-open mr-3 w-5" aria-hidden="true"></i>
+              {{ projectsSection().title }}
+            </button>
+          </li>
+          <li>
+            <button
+              (click)="scrollToSection(servicesSection().id)"
+              class="w-full text-left text-white hover:bg-primary-600 transition-colors font-medium
+                     focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
+              [attr.aria-label]="'Navigate to ' + servicesSection().title">
+              <i class="fas fa-hands-helping mr-3 w-5" aria-hidden="true"></i>
+              {{ servicesSection().title }}
+            </button>
+          </li>
+          <li>
+            <button
+              (click)="scrollToSection(certificationsSection().id)"
+              class="w-full text-left text-white hover:bg-primary-600 transition-colors font-medium
+                     focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
+              [attr.aria-label]="'Navigate to ' + certificationsSection().title">
+              <i class="fas fa-certificate mr-3 w-5" aria-hidden="true"></i>
+              {{ certificationsSection().title }}
+            </button>
+          </li>
+          <li>
+            <button
+              (click)="scrollToSection(testimonialsSection().id)"
+              class="w-full text-left text-white hover:bg-primary-600 transition-colors font-medium
+                     focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
+              [attr.aria-label]="'Navigate to ' + testimonialsSection().title">
+              <i class="fas fa-comments mr-3 w-5" aria-hidden="true"></i>
+              {{ testimonialsSection().title }}
+            </button>
+          </li>
+          <li>
+            <button
+              (click)="scrollToSection('contact')"
+              class="w-full text-left text-white hover:bg-primary-600 transition-colors font-medium
+                     focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
+              aria-label="Navigate to Contact">
+              <i class="fas fa-envelope mr-3 w-5" aria-hidden="true"></i>
+              Contact
+            </button>
+          </li>
+        </ul>
+      </div>
+    }
   </nav>
 
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col pt-[60px]">
 
     <!-- 1. HEADER SECTION -->
-    <header class="relative w-full mb-12 shadow-lg overflow-hidden" style="border-bottom-left-radius: 70px; border-bottom-right-radius: 70px;">
-      <!-- Background image -->
-      <div class="absolute inset-0 z-0">
-        <img
-          src="media.jpg"
-          alt=""
-          class="w-full h-full object-cover"
-          role="presentation">
-      </div>
+    <header class="relative w-full min-h-screen bg-accent-900 overflow-hidden flex items-center">
 
-      <!-- Color layer with opacity -->
-      <div class="absolute inset-0 z-10 bg-linear-to-br from-slate-900 to-slate-800 opacity-85"></div>
+      <!-- Decorative background vertical text (does not affect layout) -->
+      <span
+        class="absolute -left-5 top-1/2 whitespace-nowrap font-black text-white opacity-[0.07] select-none pointer-events-none z-0 text-[160px] leading-none"
+        style="transform: translateY(-50%) rotate(-90deg);"
+        aria-hidden="true">{{ lastName() }}</span>
 
-      <!-- Header content -->
-      <div class="relative z-20 py-16 px-6">
-        <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center lg:items-start justify-between gap-8 lg:gap-12">
+      <!-- Two-column content -->
+      <div class="relative z-10 w-full px-4 sm:px-8 lg:px-16 py-12 sm:py-16 lg:py-20 flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
 
-          <!-- Left block: Name, Title, Slogan -->
-          <div class="flex flex-col justify-center text-center lg:text-left lg:flex-1 space-y-4">
-            <h1 class="text-5xl md:text-6xl font-bold text-white leading-tight">
-              {{ name() }}
-            </h1>
-            <p class="text-xl md:text-2xl text-lime-400 font-semibold leading-relaxed">
-              {{ title() }}
-            </p>
-            <p class="text-lg md:text-xl text-gray-200 italic leading-relaxed max-w-xl">
-              {{ slogan() }}
-            </p>
+        <!-- ── LEFT COLUMN (55%) ─────────────────────────────── -->
+        <div class="w-full lg:w-[55%] flex flex-col items-center lg:items-start text-center lg:text-left" style="gap: 14px;">
+
+          <!-- 1. Surtitre + decorative line -->
+          <div class="flex items-center gap-3 justify-center lg:justify-start" aria-hidden="true">
+            <span class="block w-10 shrink-0 bg-primary-500" style="height: 2px;"></span>
+            <span class="text-xs text-primary-500 font-semibold tracking-[0.2em] uppercase">
+              {{ headerSurtitre() }}
+            </span>
           </div>
 
-          <!-- Right block: Personal photo -->
-          <div class="shrink-0">
+          <!-- 2. H1 title -->
+          <h1 class="font-bold text-white leading-tight text-3xl sm:text-4xl lg:text-5xl">
+            Hi I am {{ firstName() }}&nbsp;<span class="text-primary-500">{{ lastName() }}</span>
+          </h1>
+
+          <!-- 3. Job subtitle -->
+          <p class="text-base sm:text-lg lg:text-xl text-gray-300 font-normal leading-relaxed">{{ title() }}</p>
+
+          <!-- 4. Presentation paragraph (3 lines max) -->
+          <p class="text-sm text-gray-400 leading-[1.8] line-clamp-3 max-w-lg">
+            {{ aboutSection().items[0].content }}
+          </p>
+
+          <!-- 5. CTA button + social icons -->
+          <div class="flex items-center flex-wrap gap-4 justify-center lg:justify-start pt-2">
+            <button
+              type="button"
+              (click)="scrollToSection('contact')"
+              class="bg-primary-500 text-accent-900 font-medium transition-colors
+                     hover:bg-primary-400
+                     focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-accent-900"
+              style="border-radius: 50px; padding: 12px 28px; font-size: 16px;">
+              {{ headerCtaText() }}
+            </button>
+
+            @for (social of socialLinks(); track social.label) {
+              <a
+                [href]="social.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                [attr.aria-label]="social.label"
+                class="w-10 h-10 rounded-full bg-white/10 hover:bg-primary-500/20 flex items-center justify-center
+                       text-gray-300 transition-colors
+                       focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-accent-900">
+                <i [class]="social.icon + ' text-sm'" aria-hidden="true"></i>
+              </a>
+            }
+          </div>
+        </div>
+
+        <!-- ── RIGHT COLUMN (45%) ────────────────────────────── -->
+        <div class="w-full lg:w-[45%] flex items-center justify-center">
+          <div class="relative">
+
+            <!-- Geometric accent corners -->
+            <div
+              class="absolute -top-4 -right-4 w-16 h-16 border-t-4 border-r-4 border-primary-500 rounded-tr-lg pointer-events-none"
+              aria-hidden="true"></div>
+            <div
+              class="absolute -bottom-4 -left-4 w-16 h-16 border-b-4 border-l-4 border-primary-500 rounded-bl-lg pointer-events-none"
+              aria-hidden="true"></div>
+
+            <!-- Floating badge -->
+            <div
+              class="absolute -top-5 left-1/2 -translate-x-1/2 z-10 bg-primary-500 text-accent-900 font-semibold
+                     px-4 py-1.5 rounded-full whitespace-nowrap shadow-lg"
+              style="font-size: 13px;">
+              {{ headerBadgeText() }}
+            </div>
+
+            <!-- Profile photo -->
             <img
               src="me.png"
               alt="Profile picture of {{ name() }}"
-              class="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full object-cover border-4 border-lime-400 shadow-2xl">
+              class="w-44 sm:w-56 lg:w-72 object-cover shadow-2xl block relative z-0"
+              style="border-radius: 8px; aspect-ratio: 4 / 5;">
           </div>
-
         </div>
+
       </div>
     </header>
 
     <!-- ABOUT ME SECTION -->
-    <section [id]="aboutSection().id" class="scroll-mt-24 mx-6 mb-12">
-      <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
-        <!-- Photo on the left (outside the card) - Hidden on mobile -->
-        <div class="shrink-0 -mt-2 hidden md:block">
+    <section
+      [id]="aboutSection().id"
+      class="scroll-mt-15 w-full bg-accent-50 py-12 md:py-16 lg:py-20"
+      aria-labelledby="about-heading">
+
+        <div class="w-full max-w-300 mx-auto px-4 sm:px-8 flex flex-col md:flex-row items-center gap-8 lg:gap-15">
+
+        <!-- ── LEFT COLUMN — photo (45%) ─────────────────────── -->
+        <div class="w-full max-w-xs sm:max-w-sm md:max-w-none md:w-[45%] mx-auto md:mx-0 shrink-0">
           <img
             src="me.png"
             alt="Profile picture of {{ name() }}"
-            class="w-40 h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-2xl object-cover shadow-2xl"
-            style="filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.15));">
+            class="w-full object-cover block"
+            style="border-radius: 8px; aspect-ratio: 4 / 5;">
         </div>
-        <!-- White card on the right -->
-        <div class="flex-1 bg-white py-8 px-6 border-l-4 border-lime-500 shadow-md rounded-lg">
-          <h2 class="text-3xl font-bold text-slate-900 mb-6 text-center">
-            <span class="border-b-4 border-lime-500 inline-block pb-2">{{ aboutSection().title }}</span>
+
+        <!-- ── RIGHT COLUMN — text blocks (55%) ──────────────── -->
+        <div class="w-full md:w-[55%] flex flex-col" style="gap: 16px;">
+
+          <!-- 1. Surtitre + decorative line -->
+          <div class="flex items-center gap-3" aria-hidden="true">
+            <span class="block w-10 shrink-0 bg-primary-500" style="height: 2px;"></span>
+            <span class="text-xs text-primary-500 font-semibold tracking-[0.2em] uppercase">
+              {{ aboutSurtitre() }}
+            </span>
+          </div>
+
+          <!-- 2. H2 title -->
+          <h2 id="about-heading" class="font-bold text-accent-900 leading-tight text-2xl sm:text-3xl">
+            {{ aboutSection().title }}
           </h2>
-          <div class="space-y-4">
-            @for (item of aboutSection().items; track item.content) {
-              <p class="text-gray-700 text-base leading-relaxed text-justify">
-                {{ item.content }}
-              </p>
+
+          <!-- 3. Accroche (1 line max) -->
+          <p class="font-normal text-primary-500 leading-snug text-base sm:text-lg truncate">
+            {{ aboutAccroche() }}
+          </p>
+
+          <!-- 4. Main paragraph (4–5 lines max) -->
+          <p class="text-gray-500 leading-[1.8] line-clamp-5" style="font-size: 14px;">
+            {{ aboutSection().items[0].content }}
+          </p>
+
+          <!-- 5. Stats row -->
+          <div class="flex items-stretch gap-0 pt-2" role="list" aria-label="Key facts">
+            @for (stat of aboutStats(); track stat.label; let last = $last) {
+              <div
+                class="flex flex-col items-center justify-center flex-1 px-4 py-2"
+                [class.border-r]="!last"
+                [class.border-gray-300]="!last"
+                role="listitem">
+                <span class="font-bold text-primary-500 leading-none" style="font-size: 28px;">
+                  {{ stat.value }}
+                </span>
+                <span class="text-gray-400 mt-1 text-center leading-tight" style="font-size: 12px;">
+                  {{ stat.label }}
+                </span>
+              </div>
             }
           </div>
+
+          <!-- 6. Outline CTA button -->
+          <div class="pt-2">
+            <button
+              type="button"
+              (click)="scrollToSection('contact')"
+              class="border border-primary-500 text-primary-500 font-medium bg-transparent
+                     hover:bg-primary-500 hover:text-accent-900 transition-colors
+                     focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-accent-50"
+              style="border-radius: 50px; padding: 10px 24px; font-size: 14px;">
+              Let's work together
+            </button>
+          </div>
+
         </div>
       </div>
     </section>
@@ -170,255 +380,671 @@
     <main class="grow space-y-12">
 
       <!-- TECHNICAL SKILLS SECTION -->
-      <section [id]="skillsSection().id" class="scroll-mt-24 space-y-6 bg-[#f8f4f1] p-6">
-        <h2 class="text-3xl font-bold text-slate-900 mb-6 text-center">
-          <span class="border-b-4 border-lime-500 inline-block pb-2">{{ skillsSection().title }}</span>
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          @for (item of skillsSection().items; track item.heading) {
-            <div class="group bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-lime-400 hover:border-lime-600">
-              <h3 class="text-lg font-bold text-gray-900 mb-4 group-hover:text-lime-600 transition-colors">
-                {{ item.heading }}
-              </h3>
-              @if (item.list) {
-                <ul class="space-y-2 text-gray-700">
-                  @for (point of item.list; track point) {
-                    <li class="flex items-start gap-2">
-                      <span class="text-lime-500 font-bold mt-1 shrink-0">✓</span>
-                      <span>{{ point }}</span>
+      <section
+        [id]="skillsSection().id"
+        class="scroll-mt-15 w-full bg-accent-900 py-12 md:py-16 lg:py-20"
+        aria-labelledby="skills-heading">
+
+        <div class="w-full max-w-[1200px] mx-auto px-4 sm:px-8">
+
+          <!-- Section header -->
+          <div class="text-center mb-8 md:mb-12">
+            <h2
+              id="skills-heading"
+              class="font-bold text-white leading-tight text-2xl sm:text-3xl">
+              {{ skillsSection().title }}
+            </h2>
+            <div
+              class="bg-primary-500 mx-auto mt-3"
+              style="width: 64px; height: 4px; border-radius: 2px;"
+              aria-hidden="true"></div>
+          </div>
+
+          <!-- Cards grid -->
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            role="list">
+            @for (item of skillsSection().items; track item.heading) {
+              <article
+                class="bg-accent-800 border border-slate-700 hover:border-l-[3px] hover:border-l-primary-500
+                       transition-all duration-300"
+                style="border-radius: 12px; padding: 28px;"
+                [attr.aria-label]="item.heading + ' skills'"
+                role="listitem">
+
+                <!-- Icon block -->
+                <div
+                  class="w-12 h-12 rounded-lg flex items-center justify-center bg-primary-500/15 shrink-0"
+                  aria-hidden="true">
+                  <i [class]="item.icon + ' text-primary-500'" style="font-size: 24px;" aria-hidden="true"></i>
+                </div>
+
+                <!-- Category title -->
+                <h3
+                  class="font-medium text-white leading-snug"
+                  style="font-size: 18px; margin-top: 16px;">
+                  {{ item.heading }}
+                </h3>
+
+                <!-- Separator -->
+                <div
+                  class="border-t border-slate-700 w-full"
+                  style="margin: 16px 0;"
+                  aria-hidden="true"></div>
+
+                <!-- Skill pills -->
+                <ul class="flex flex-wrap list-none p-0 m-0" style="gap: 8px;">
+                  @for (skill of item.list; track skill) {
+                    <li
+                      class="bg-accent-900 text-slate-300 border border-slate-700
+                             hover:border-primary-500 hover:text-primary-400
+                             transition-colors duration-200 cursor-default leading-none"
+                      style="border-radius: 50px; padding: 6px 14px; font-size: 13px;">
+                      {{ skill }}
                     </li>
                   }
                 </ul>
-              }
-            </div>
-          }
+
+              </article>
+            }
+          </div>
+
         </div>
       </section>
 
       <!-- PROFESSIONAL EXPERIENCE SECTION -->
-      <section [id]="experienceSection().id" class="scroll-mt-24 space-y-6 p-6">
-        <h2 class="text-3xl font-bold text-slate-900 mb-6 text-center">
-          <span class="border-b-4 border-lime-500 inline-block pb-2">{{ experienceSection().title }}</span>
-        </h2>
-        <div class="space-y-6">
-          @for (item of experienceSection().items; track item.heading) {
-            <div class="group bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-lime-400 hover:border-lime-600">
-              <h3 class="text-lg font-bold text-gray-900 mb-3 group-hover:text-lime-600 transition-colors">
-                {{ item.heading }}
-              </h3>
-              @if (item.content) {
-                <p class="text-gray-700 leading-relaxed text-justify mb-4">
-                  {{ item.content }}
-                </p>
-              }
-              @if (item.list) {
-                <ul class="space-y-2 ml-2 text-gray-700">
-                  @for (point of item.list; track point) {
-                    <li class="flex items-start gap-2">
-                      <span class="text-lime-500 font-bold mt-1 shrink-0">•</span>
-                      <span>{{ point }}</span>
-                    </li>
-                  }
-                </ul>
-              }
-            </div>
-          }
+      <section
+        [id]="experienceSection().id"
+        class="scroll-mt-15 w-full bg-accent-50 py-12 md:py-16 lg:py-20"
+        aria-labelledby="experience-heading">
+
+        <div class="w-full max-w-[900px] mx-auto px-4 sm:px-8">
+
+          <!-- Section header -->
+          <div class="text-center mb-8 md:mb-12">
+            <h2
+              id="experience-heading"
+              class="font-bold text-accent-900 leading-tight text-2xl sm:text-3xl">
+              {{ experienceSection().title }}
+            </h2>
+            <div
+              class="bg-primary-500 mx-auto mt-3"
+              style="width: 64px; height: 4px; border-radius: 2px;"
+              aria-hidden="true"></div>
+          </div>
+
+          <!-- Cards list -->
+          <div class="flex flex-col" style="gap: 24px;">
+            @for (item of experienceSection().items; track item.heading) {
+              <article
+                class="bg-white border-l-4 border-primary-500 px-4 py-5 sm:px-8 sm:py-7"
+                style="border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06);"
+                [attr.aria-label]="item.heading">
+
+                <!-- Job title / company / dates -->
+                <h3
+                  class="font-bold text-accent-900 leading-snug"
+                  style="font-size: clamp(16px, 2.5vw, 18px);">
+                  {{ item.heading }}
+                </h3>
+
+                <!-- Context paragraph -->
+                @if (item.content) {
+                  <p
+                    class="text-accent-700 leading-[1.8]"
+                    style="font-size: 14px; margin-top: 12px;">
+                    {{ item.content }}
+                  </p>
+                }
+
+                <!-- Achievements list -->
+                @if (item.list) {
+                  <ul class="flex flex-col list-none p-0 m-0" style="margin-top: 16px; gap: 10px;">
+                    @for (point of item.list; track point) {
+                      <li class="flex items-start" style="gap: 10px;">
+                        <span
+                          class="shrink-0 rounded-full bg-primary-500"
+                          style="width: 8px; height: 8px; margin-top: 6px;"
+                          aria-hidden="true"></span>
+                        <span
+                          class="text-accent-800 leading-[1.7]"
+                          style="font-size: 14px;">
+                          {{ point }}
+                        </span>
+                      </li>
+                    }
+                  </ul>
+                }
+
+              </article>
+            }
+          </div>
+
         </div>
       </section>
 
       <!-- PROJECTS SECTION -->
-      <section [id]="projectsSection().id" class="scroll-mt-24 space-y-6 bg-[#f8f4f1] p-6">
-        <h2 class="text-3xl font-bold text-slate-900 mb-6 text-center">
-          <span class="border-b-4 border-lime-500 inline-block pb-2">{{ projectsSection().title }}</span>
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <section [id]="projectsSection().id" class="scroll-mt-24 bg-accent-900 py-12 md:py-16 lg:py-20 px-4 sm:px-6">
+        <div class="w-full max-w-[1200px] mx-auto">
+        <!-- En-tête -->
+        <h2 class="text-2xl sm:text-3xl font-bold text-white text-center">{{ projectsSection().title }}</h2>
+        <!-- Ligne décorative -->
+        <div class="w-16 h-1 rounded-sm bg-primary-500 mx-auto mt-4 mb-8 md:mb-12" aria-hidden="true"></div>
+
+        <!-- Grille de cartes -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           @for (project of projectsSection().items; track project.heading) {
-            <div class="group bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-lime-400 hover:border-lime-600">
-              <h3 class="text-lg font-bold text-gray-900 mb-3 group-hover:text-lime-600 transition-colors">
-                {{ project.heading }}
-              </h3>
-              @if (project.content) {
-                <p class="text-gray-700 leading-relaxed text-justify mb-4">
-                  {{ project.content }}
-                </p>
-              }
-              @if (project.technologies) {
-                <div class="mb-4">
-                  <p class="text-sm font-semibold text-gray-600 mb-2">Technologies:</p>
-                  <div class="flex flex-wrap gap-2">
+            <article
+              class="group flex flex-col bg-accent-800 rounded-xl overflow-hidden
+                     border border-slate-700 border-t-2 border-t-transparent
+                     hover:border-t-primary-500 transition-[border-top-color] duration-300"
+              [attr.aria-label]="project.heading">
+
+              <!-- Corps de carte -->
+              <div class="p-6 flex-1 flex flex-col">
+
+                <!-- Ligne icône + lien externe -->
+                <div class="flex justify-between items-start">
+                  <!-- Icône projet -->
+                  <div
+                    class="w-11 h-11 rounded-lg flex items-center justify-center bg-primary-500/15"
+                    aria-hidden="true">
+                    @if (project.icon) {
+                      <i [class]="project.icon + ' text-primary-500'" style="font-size:22px" aria-hidden="true"></i>
+                    }
+                  </div>
+                  <!-- Lien externe (coin supérieur droit) -->
+                  @if (project.link) {
+                    <a
+                      [href]="project.link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="p-1 rounded text-slate-500 group-hover:text-primary-500
+                             transition-colors duration-300
+                             focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      [attr.aria-label]="'Ouvrir ' + project.heading + ' dans un nouvel onglet'">
+                      <i class="fas fa-external-link-alt" style="font-size:18px" aria-hidden="true"></i>
+                    </a>
+                  }
+                </div>
+
+                <!-- Titre du projet -->
+                <h3 class="text-[17px] font-medium text-white mt-4">{{ project.heading }}</h3>
+
+                <!-- Description (3 lignes max) -->
+                @if (project.content) {
+                  <p class="text-sm leading-7 text-slate-400 mt-2 line-clamp-3">{{ project.content }}</p>
+                }
+              </div>
+
+              <!-- Pied de carte -->
+              <div class="px-6 py-4 border-t border-slate-700">
+                <!-- Pills technologies -->
+                @if (project.technologies) {
+                  <div class="flex flex-wrap gap-1.5" role="list" [attr.aria-label]="'Technologies : ' + project.heading">
                     @for (tech of project.technologies; track tech) {
-                      <span class="px-3 py-1 bg-lime-100 text-lime-700 text-xs font-medium rounded-full">
+                      <span
+                        class="bg-accent-900 rounded-full px-3 py-1 text-xs text-slate-400 border border-slate-700"
+                        role="listitem">
                         {{ tech }}
                       </span>
                     }
                   </div>
-                </div>
-              }
-              @if (project.link) {
-                <a
-                  [href]="project.link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 text-lime-600 hover:text-lime-700 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-lime-500 rounded-sm px-2 py-1">
-                  View project →
-                </a>
-              }
-            </div>
+                }
+
+                <!-- Lien projet -->
+                @if (project.link) {
+                  <a
+                    [href]="project.link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 mt-3 no-underline
+                           text-[13px] font-medium text-primary-500
+                           hover:underline hover:text-primary-400
+                           transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 rounded"
+                    [attr.aria-label]="'Voir le projet : ' + project.heading">
+                    Voir le projet
+                    <i class="fas fa-arrow-up-right-from-square" style="font-size:14px" aria-hidden="true"></i>
+                  </a>
+                }
+              </div>
+            </article>
           }
+        </div>
         </div>
       </section>
 
       <!-- SERVICES SECTION -->
-      <section [id]="servicesSection().id" class="scroll-mt-24 space-y-6 p-6">
-        <h2 class="text-3xl font-bold text-slate-900 mb-6 text-center">
-          <span class="border-b-4 border-lime-500 inline-block pb-2">{{ servicesSection().title }}</span>
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          @for (service of servicesSection().items; track service.heading) {
-            <div class="group bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-lime-400 hover:border-lime-600">
-              <div class="flex items-start gap-4">
-                @if (service.icon) {
-                  <span class="text-4xl shrink-0">{{ service.icon }}</span>
-                }
-                <div class="flex-1">
-                  <h3 class="text-lg font-bold text-gray-900 mb-3 group-hover:text-lime-600 transition-colors">
-                    {{ service.heading }}
-                  </h3>
-                  @if (service.content) {
-                    <p class="text-gray-700 leading-relaxed text-justify">
-                      {{ service.content }}
-                    </p>
+      <section
+        [id]="servicesSection().id"
+        class="scroll-mt-15 w-full bg-accent-50 py-12 md:py-16 lg:py-20"
+        aria-labelledby="services-heading">
+
+        <div class="w-full max-w-[1200px] mx-auto px-4 sm:px-8">
+
+          <!-- Section header -->
+          <div class="text-center mb-8 md:mb-12">
+            <h2
+              id="services-heading"
+              class="font-bold text-accent-900 leading-tight text-2xl sm:text-3xl">
+              {{ servicesSection().title }}
+            </h2>
+            <div
+              class="bg-primary-500 mx-auto mt-3"
+              style="width: 64px; height: 4px; border-radius: 2px;"
+              aria-hidden="true"></div>
+          </div>
+
+          <!-- Cards grid -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2"
+            style="gap: 24px;"
+            role="list">
+            @for (service of servicesSection().items; track service.heading) {
+              <article
+                class="group bg-white border-l-4 border-primary-500 hover:border-primary-600
+                       transition-[border-left-color] duration-200"
+                style="border-radius: 12px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06);"
+                [attr.aria-label]="service.heading"
+                role="listitem">
+
+                <div class="flex items-start" style="gap: 20px;">
+
+                  <!-- Icon block -->
+                  @if (service.icon) {
+                    <div
+                      class="flex items-center justify-center shrink-0 bg-primary-100"
+                      style="width: 56px; height: 56px; border-radius: 10px; font-size: 28px;"
+                      aria-hidden="true">
+                      {{ service.icon }}
+                    </div>
                   }
+
+                  <!-- Text block -->
+                  <div class="flex-1">
+                    <h3
+                      class="font-bold text-accent-900"
+                      style="font-size: 18px; margin-bottom: 10px;">
+                      {{ service.heading }}
+                    </h3>
+                    @if (service.content) {
+                      <p
+                        class="text-accent-700 leading-[1.8] line-clamp-5 text-justify"
+                        style="font-size: 14px;">
+                        {{ service.content }}
+                      </p>
+                    }
+                  </div>
+
                 </div>
-              </div>
-            </div>
-          }
+              </article>
+            }
+          </div>
+
+        </div>
+      </section>
+
+      <!-- CERTIFICATIONS SECTION -->
+      <section
+        [id]="certificationsSection().id"
+        class="scroll-mt-15 w-full bg-accent-900 py-12 md:py-16 lg:py-20"
+        aria-labelledby="certifications-heading">
+
+        <div class="w-full max-w-[1200px] mx-auto px-4 sm:px-8">
+
+          <!-- Section header -->
+          <div class="text-center mb-8 md:mb-12">
+            <h2
+              id="certifications-heading"
+              class="font-bold text-white leading-tight text-2xl sm:text-3xl">
+              {{ certificationsSection().title }}
+            </h2>
+            <div
+              class="bg-primary-500 mx-auto mt-3"
+              style="width: 64px; height: 4px; border-radius: 2px;"
+              aria-hidden="true"></div>
+          </div>
+
+          <!-- Cards grid -->
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            role="list">
+            @for (cert of certificationsSection().items; track cert.name) {
+              <article
+                class="bg-accent-800 border border-slate-700 rounded-xl flex flex-col
+                       hover:border-primary-500 transition-colors duration-300"
+                style="padding: 28px;"
+                [attr.aria-label]="cert.name + ' — ' + cert.issuer"
+                role="listitem">
+
+                <!-- Top row: icon + date -->
+                <div class="flex items-start justify-between" style="margin-bottom: 16px;">
+                  <div
+                    class="w-12 h-12 rounded-lg flex items-center justify-center bg-primary-500/15 shrink-0"
+                    aria-hidden="true">
+                    <i [class]="cert.icon + ' text-primary-500'" style="font-size: 22px;"></i>
+                  </div>
+                  <span
+                    class="text-slate-400 font-medium leading-none"
+                    style="font-size: 12px; margin-top: 4px;">
+                    {{ cert.date }}
+                  </span>
+                </div>
+
+                <!-- Certification name -->
+                <h3
+                  class="font-semibold text-white leading-snug"
+                  style="font-size: 16px; margin-bottom: 6px;">
+                  {{ cert.name }}
+                </h3>
+
+                <!-- Issuer -->
+                <p
+                  class="text-primary-400 font-medium"
+                  style="font-size: 13px; margin-bottom: 12px;">
+                  {{ cert.issuer }}
+                </p>
+
+                <!-- Credential ID -->
+                @if (cert.credentialId) {
+                  <p
+                    class="text-slate-500 font-mono"
+                    style="font-size: 11px; margin-bottom: 16px;">
+                    ID: {{ cert.credentialId }}
+                  </p>
+                }
+
+                <!-- Spacer -->
+                <div class="flex-1"></div>
+
+                <!-- Separator -->
+                <div
+                  class="border-t border-slate-700 w-full"
+                  style="margin-bottom: 16px;"
+                  aria-hidden="true"></div>
+
+                <!-- Credential link -->
+                @if (cert.link) {
+                  <a
+                    [href]="cert.link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 no-underline
+                           text-primary-500 hover:text-primary-400 transition-colors
+                           focus:outline-none focus:ring-2 focus:ring-primary-500 rounded"
+                    [attr.aria-label]="'View credential: ' + cert.name"
+                    style="font-size: 13px; font-weight: 500;">
+                    <i class="fas fa-external-link-alt" style="font-size: 12px;" aria-hidden="true"></i>
+                    View credential
+                  </a>
+                }
+
+              </article>
+            }
+          </div>
+
         </div>
       </section>
 
       <!-- CLIENTS AND TESTIMONIALS SECTION -->
-      <section [id]="testimonialsSection().id" class="scroll-mt-24 space-y-6 bg-[#f8f4f1] p-6">
-        <h2 class="text-3xl font-bold text-slate-900 mb-6 text-center">
-          <span class="border-b-4 border-lime-500 inline-block pb-2">{{ testimonialsSection().title }}</span>
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          @for (testimonial of testimonialsSection().items; track testimonial.name) {
-            <div class="group bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300 border-l-4 border-lime-400 hover:border-lime-600">
-              <div class="flex flex-col h-full">
-                <p class="text-gray-700 leading-relaxed text-justify mb-6 italic flex-1">
+      <section
+        [id]="testimonialsSection().id"
+        class="scroll-mt-15 w-full bg-accent-50 py-12 md:py-16 lg:py-20"
+        aria-labelledby="testimonials-heading">
+
+        <div class="w-full max-w-[1200px] mx-auto px-4 sm:px-8">
+
+          <!-- Section header -->
+          <div class="text-center mb-8 md:mb-12">
+            <h2
+              id="testimonials-heading"
+              class="font-bold text-accent-900 leading-tight text-2xl sm:text-3xl">
+              {{ testimonialsSection().title }}
+            </h2>
+            <div
+              class="bg-primary-500 mx-auto mt-3"
+              style="width: 64px; height: 4px; border-radius: 2px;"
+              aria-hidden="true"></div>
+          </div>
+
+          <!-- Cards grid -->
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            style="gap: 24px; align-items: stretch;">
+            @for (testimonial of testimonialsSection().items; track testimonial.name; let i = $index) {
+              <article
+                class="bg-white flex flex-col justify-between transition-shadow duration-200
+                       hover:[box-shadow:0_4px_16px_rgba(0,0,0,0.08)]"
+                [class.border]="(i % 3) !== 1"
+                [class.border-accent-200]="(i % 3) !== 1"
+                [class.border-l-4]="(i % 3) === 1"
+                [class.border-primary-500]="(i % 3) === 1"
+                style="border-radius: 12px; padding: 28px;"
+                [attr.aria-label]="testimonial.name + ', ' + testimonial.role + ' at ' + testimonial.company">
+
+                <!-- Quote block -->
+                <p
+                  class="italic text-accent-700 text-justify leading-[1.85]"
+                  style="font-size: 14px;">
                   "{{ testimonial.content }}"
                 </p>
-                <div class="border-t pt-4">
-                  <p class="font-bold text-gray-900">{{ testimonial.name }}</p>
-                  <p class="text-sm text-gray-600">{{ testimonial.role }}</p>
-                  <p class="text-sm text-lime-600 font-medium">{{ testimonial.company }}</p>
+
+                <!-- Separator -->
+                <hr
+                  class="border-t border-accent-200 w-full"
+                  style="margin: 20px 0;"
+                  aria-hidden="true">
+
+                <!-- Author block -->
+                <div>
+                  <p class="font-bold text-accent-900" style="font-size: 15px;">
+                    {{ testimonial.name }}
+                  </p>
+                  <p class="text-accent-600" style="font-size: 13px; margin-top: 2px;">
+                    {{ testimonial.role }}
+                  </p>
+                  <p class="text-primary-600" style="font-size: 13px; margin-top: 2px;">
+                    {{ testimonial.company }}
+                  </p>
                 </div>
-              </div>
-            </div>
-          }
+
+              </article>
+            }
+          </div>
+
         </div>
       </section>
 
       <!-- CONTACT SECTION -->
-      <section id="contact" class="scroll-mt-24 space-y-6 p-6">
-        <h2 class="text-3xl font-bold text-slate-900 mb-6 text-center">
-          <span class="border-b-4 border-lime-500 inline-block pb-2">Contact</span>
-        </h2>
-        <div>
+      <section
+        id="contact"
+        class="scroll-mt-15 w-full bg-accent-900 py-12 md:py-16 lg:py-20"
+        aria-labelledby="contact-heading">
+
+        <div class="w-full max-w-[680px] mx-auto px-4 sm:px-8">
+
+          <!-- Section header -->
+          <div class="text-center mb-8 md:mb-12">
+            <h2
+              id="contact-heading"
+              class="font-bold text-white leading-tight text-2xl sm:text-3xl">
+              Contact
+            </h2>
+            <div
+              class="bg-primary-500 mx-auto mt-3"
+              style="width: 64px; height: 4px; border-radius: 2px;"
+              aria-hidden="true"></div>
+          </div>
+
+          <!-- Success message -->
           @if (contactSubmitted()) {
-            <div class="bg-lime-100 border-l-4 border-lime-500 p-4 mb-6 rounded" role="alert">
-              <p class="text-lime-800 font-medium">
+            <div
+              class="bg-primary-500/15 border border-primary-500 rounded-xl px-5 py-4 mb-8"
+              role="alert"
+              style="border-radius: 12px;">
+              <p class="text-primary-400 font-medium" style="font-size: 14px;">
                 ✓ Thank you! Your message has been sent successfully. I will reply as soon as possible.
               </p>
             </div>
           }
-          <form [formGroup]="contactForm" (ngSubmit)="onSubmitContact()" class="bg-white p-8 rounded-lg shadow-md space-y-6">
 
-            <!-- Name -->
-            <div>
-              <label for="contact-name" class="block text-sm font-medium text-gray-700 mb-2">
-                Name <span class="text-red-500">*</span>
-              </label>
-              <input
-                id="contact-name"
-                type="text"
-                formControlName="name"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent"
-                [class.border-red-500]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched"
-                placeholder="Your full name">
-              @if (contactForm.get('name')?.invalid && contactForm.get('name')?.touched) {
-                <p class="mt-1 text-sm text-red-600">Name is required (minimum 2 characters)</p>
-              }
-            </div>
+          <!-- Form container -->
+          <div class="bg-accent-800 p-5 sm:p-8 lg:p-10" style="border-radius: 16px;">
+            <form
+              [formGroup]="contactForm"
+              (ngSubmit)="onSubmitContact()"
+              novalidate
+              aria-label="Contact form">
 
-            <!-- Email -->
-            <div>
-              <label for="contact-email" class="block text-sm font-medium text-gray-700 mb-2">
-                Email <span class="text-red-500">*</span>
-              </label>
-              <input
-                id="contact-email"
-                type="email"
-                formControlName="email"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent"
-                [class.border-red-500]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
-                placeholder="your.email@example.com">
-              @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
-                <p class="mt-1 text-sm text-red-600">Please enter a valid email address</p>
-              }
-            </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2" style="gap: 20px;">
 
-            <!-- Subject -->
-            <div>
-              <label for="contact-subject" class="block text-sm font-medium text-gray-700 mb-2">
-                Subject <span class="text-red-500">*</span>
-              </label>
-              <input
-                id="contact-subject"
-                type="text"
-                formControlName="subject"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent"
-                [class.border-red-500]="contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched"
-                placeholder="Subject of your message">
-              @if (contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched) {
-                <p class="mt-1 text-sm text-red-600">Subject is required (minimum 5 characters)</p>
-              }
-            </div>
+                <!-- Name -->
+                <div class="col-span-1 flex flex-col">
+                  <label
+                    for="contact-name"
+                    class="block font-medium text-slate-300"
+                    style="font-size: 13px; margin-bottom: 6px;">
+                    Name <span class="text-warning-500" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    formControlName="name"
+                    autocomplete="name"
+                    class="w-full text-white bg-accent-900 border border-slate-700 transition-colors duration-200
+                           focus:outline-none focus:border-primary-500"
+                    [class.border-warning-500]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched"
+                    style="border-radius: 8px; padding: 12px 16px; font-size: 14px;
+                           --tw-shadow: 0 0 0 3px rgb(var(--color-primary-500) / 0.2);"
+                    placeholder="Your full name"
+                    [attr.aria-invalid]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched"
+                    aria-describedby="name-error">
+                  @if (contactForm.get('name')?.invalid && contactForm.get('name')?.touched) {
+                    <span
+                      id="name-error"
+                      class="text-warning-500 block"
+                      style="font-size: 12px; margin-top: 4px;"
+                      role="alert">
+                      Name is required (minimum 2 characters)
+                    </span>
+                  }
+                </div>
 
-            <!-- Message -->
-            <div>
-              <label for="contact-message" class="block text-sm font-medium text-gray-700 mb-2">
-                Message <span class="text-red-500">*</span>
-              </label>
-              <textarea
-                id="contact-message"
-                formControlName="message"
-                rows="6"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent resize-vertical"
-                [class.border-red-500]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched"
-                placeholder="Describe your project or inquiry..."></textarea>
-              @if (contactForm.get('message')?.invalid && contactForm.get('message')?.touched) {
-                <p class="mt-1 text-sm text-red-600">Message is required (minimum 10 characters)</p>
-              }
-            </div>
+                <!-- Email -->
+                <div class="col-span-1 flex flex-col">
+                  <label
+                    for="contact-email"
+                    class="block font-medium text-slate-300"
+                    style="font-size: 13px; margin-bottom: 6px;">
+                    Email <span class="text-warning-500" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    formControlName="email"
+                    autocomplete="email"
+                    class="w-full text-white bg-accent-900 border border-slate-700 transition-colors duration-200
+                           focus:outline-none focus:border-primary-500"
+                    [class.border-warning-500]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
+                    style="border-radius: 8px; padding: 12px 16px; font-size: 14px;"
+                    placeholder="your.email@example.com"
+                    [attr.aria-invalid]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
+                    aria-describedby="email-error">
+                  @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
+                    <span
+                      id="email-error"
+                      class="text-warning-500 block"
+                      style="font-size: 12px; margin-top: 4px;"
+                      role="alert">
+                      Please enter a valid email address
+                    </span>
+                  }
+                </div>
 
-            <!-- Submit Button -->
-            <div>
-              <button
-                type="submit"
-                [disabled]="contactForm.invalid"
-                class="w-full bg-lime-500 text-white font-bold py-3 px-6 rounded-md hover:bg-lime-600 transition-colors focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 disabled:bg-gray-300 disabled:cursor-not-allowed">
-                Send message
-              </button>
-            </div>
-          </form>
+                <!-- Subject -->
+                <div class="col-span-1 sm:col-span-2 flex flex-col">
+                  <label
+                    for="contact-subject"
+                    class="block font-medium text-slate-300"
+                    style="font-size: 13px; margin-bottom: 6px;">
+                    Subject <span class="text-warning-500" aria-hidden="true">*</span>
+                  </label>
+                  <input
+                    id="contact-subject"
+                    type="text"
+                    formControlName="subject"
+                    class="w-full text-white bg-accent-900 border border-slate-700 transition-colors duration-200
+                           focus:outline-none focus:border-primary-500"
+                    [class.border-warning-500]="contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched"
+                    style="border-radius: 8px; padding: 12px 16px; font-size: 14px;"
+                    placeholder="Subject of your message"
+                    [attr.aria-invalid]="contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched"
+                    aria-describedby="subject-error">
+                  @if (contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched) {
+                    <span
+                      id="subject-error"
+                      class="text-warning-500 block"
+                      style="font-size: 12px; margin-top: 4px;"
+                      role="alert">
+                      Subject is required (minimum 5 characters)
+                    </span>
+                  }
+                </div>
+
+                <!-- Message -->
+                <div class="col-span-1 sm:col-span-2 flex flex-col">
+                  <label
+                    for="contact-message"
+                    class="block font-medium text-slate-300"
+                    style="font-size: 13px; margin-bottom: 6px;">
+                    Message <span class="text-warning-500" aria-hidden="true">*</span>
+                  </label>
+                  <textarea
+                    id="contact-message"
+                    formControlName="message"
+                    class="w-full text-white bg-accent-900 border border-slate-700 transition-colors duration-200
+                           focus:outline-none focus:border-primary-500 resize-y"
+                    [class.border-warning-500]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched"
+                    style="border-radius: 8px; padding: 12px 16px; font-size: 14px; min-height: 140px;"
+                    placeholder="Describe your project or inquiry..."
+                    [attr.aria-invalid]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched"
+                    aria-describedby="message-error"></textarea>
+                  @if (contactForm.get('message')?.invalid && contactForm.get('message')?.touched) {
+                    <span
+                      id="message-error"
+                      class="text-warning-500 block"
+                      style="font-size: 12px; margin-top: 4px;"
+                      role="alert">
+                      Message is required (minimum 10 characters)
+                    </span>
+                  }
+                </div>
+
+                <!-- Submit Button -->
+                <div class="col-span-1 sm:col-span-2 flex justify-end">
+                  <button
+                    type="submit"
+                    [disabled]="contactForm.invalid"
+                    class="bg-primary-500 text-accent-900 font-bold transition-colors
+                           hover:bg-primary-400
+                           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-accent-800
+                           disabled:opacity-40 disabled:cursor-not-allowed"
+                    style="border-radius: 8px; padding: 12px 32px; font-size: 15px;">
+                    Send message
+                  </button>
+                </div>
+
+              </div>
+            </form>
+          </div>
+
         </div>
       </section>
 
     </main>
 
     <!-- 5. FOOTER SECTION -->
-    <footer class="w-full py-8 mt-12 bg-slate-900 flex flex-col items-center justify-center shadow-inner">
+    <footer class="w-full py-8 bg-accent-900 flex flex-col items-center justify-center shadow-inner">
       <p class="text-sm text-white">
         {{ footerText() }}
       </p>

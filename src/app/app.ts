@@ -1,4 +1,4 @@
-import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -14,10 +14,20 @@ interface Project extends BaseItem {
   technologies?: string[];
   link?: string;
   image?: string;
+  icon?: string;
 }
 
 interface Service extends BaseItem {
   icon?: string;
+}
+
+interface Certification {
+  name: string;
+  issuer: string;
+  date: string;
+  credentialId?: string;
+  link?: string;
+  icon: string;
 }
 
 interface Testimonial {
@@ -32,8 +42,25 @@ interface AboutItem {
   content: string;
 }
 
+interface SkillCategory {
+  heading: string;
+  icon: string;
+  list: string[];
+}
+
+interface AboutStat {
+  value: string;
+  label: string;
+}
+
+interface SocialLink {
+  label: string;
+  url: string;
+  icon: string;
+}
+
 // Union type for different section types
-type SectionItem = BaseItem | Project | Service | Testimonial | AboutItem;
+type SectionItem = BaseItem | Project | Service | Testimonial | AboutItem | SkillCategory;
 
 interface Section<T = SectionItem> {
   id: string;
@@ -52,6 +79,15 @@ export class App {
   private readonly fb = new FormBuilder();
 
   protected readonly name = signal('Jodel Fokou');
+
+  /** First word of the name — rendered in white on the logo */
+  protected readonly firstName = computed(() => this.name().split(' ')[0]);
+  /** Remaining words — rendered in accent colour on the logo */
+  protected readonly lastName = computed(() => this.name().split(' ').slice(1).join(' '));
+  /** Up-to-2-letter initials for the round icon */
+  protected readonly initials = computed(() =>
+    this.name().split(' ').map(w => w.charAt(0)).join('').substring(0, 2).toUpperCase()
+  );
   protected readonly title = signal('Senior Fullstack Developer | Java/Spring Boot & Angular Expert');
   protected readonly slogan = signal('I build scalable applications that solve real business problems. Let\'s work together to bring your project to life.');
 
@@ -73,69 +109,54 @@ export class App {
   });
 
   // Technical Skills Section
-  protected readonly skillsSection = signal<Section<BaseItem>>({
+  protected readonly skillsSection = signal<Section<SkillCategory>>({
     id: 'skills',
     title: 'Technical Expertise',
     items: [
       {
-        heading: 'Backend Technologies',
-        list: [
-          'Java 17/21, Spring Boot 3.x, Spring Security',
-          'Microservices (Spring Cloud, Resilience patterns)',
-          'REST APIs, GraphQL, OpenAPI/Swagger',
-          'Kafka, RabbitMQ, Redis',
-          'PostgreSQL, MongoDB, JPA/Hibernate'
-        ]
+        heading: 'Java & Spring Boot',
+        icon: 'fas fa-server',
+        list: ['Java 17/21', 'Spring Boot 3.x', 'Spring Security', 'Spring Cloud', 'REST APIs', 'GraphQL', 'OpenAPI/Swagger']
       },
       {
-        heading: 'Frontend Technologies',
-        list: [
-          'Angular 17/18 (Standalone, Signals, SSR)',
-          'TypeScript, RxJS, NgRx State Management',
-          'Tailwind CSS, SCSS, Responsive Design',
-          'Jasmine/Karma, Cypress, Playwright',
-          'WCAG 2.1 AA Accessibility'
-        ]
+        heading: 'Angular & TypeScript',
+        icon: 'fas fa-code',
+        list: ['Angular 17/18', 'TypeScript', 'RxJS', 'NgRx', 'Signals', 'SSR', 'Standalone Components']
       },
       {
-        heading: 'Cloud & DevOps',
-        list: [
-          'AWS (EC2, S3, Lambda, ECS, RDS)',
-          'Docker, Kubernetes, Helm',
-          'CI/CD (Jenkins, GitLab CI, GitHub Actions)',
-          'Terraform, Infrastructure as Code',
-          'Prometheus, Grafana, ELK Stack'
-        ]
+        heading: 'Databases & Messaging',
+        icon: 'fas fa-database',
+        list: ['PostgreSQL', 'MongoDB', 'Redis', 'Kafka', 'RabbitMQ', 'JPA / Hibernate']
+      },
+      {
+        heading: 'Cloud & AWS',
+        icon: 'fas fa-cloud',
+        list: ['EC2', 'S3', 'Lambda', 'ECS', 'RDS', 'Terraform', 'Infrastructure as Code']
+      },
+      {
+        heading: 'Containerization',
+        icon: 'fab fa-docker',
+        list: ['Docker', 'Kubernetes', 'Helm', 'Container Orchestration']
+      },
+      {
+        heading: 'CI/CD & Quality',
+        icon: 'fas fa-code-branch',
+        list: ['Jenkins', 'GitLab CI', 'GitHub Actions', 'SonarQube', 'Prometheus', 'Grafana', 'ELK Stack']
+      },
+      {
+        heading: 'UI & Design Systems',
+        icon: 'fas fa-palette',
+        list: ['Tailwind CSS', 'SCSS', 'Responsive Design', 'WCAG 2.1 AA', 'Cypress', 'Playwright', 'Jasmine / Karma']
       },
       {
         heading: 'AI & Generative Tools',
-        list: [
-          'GitHub Copilot, Claude, ChatGPT',
-          'AI-Assisted Development & Code Review',
-          'Prompt Engineering for Development Tasks',
-          'AI Integration in Applications (OpenAI, Anthropic APIs)',
-          'Automated Documentation & Testing with AI'
-        ]
+        icon: 'fas fa-robot',
+        list: ['GitHub Copilot', 'Claude', 'ChatGPT', 'OpenAI API', 'Anthropic API', 'Prompt Engineering']
       },
       {
         heading: 'Architecture & Practices',
-        list: [
-          'Domain-Driven Design, Clean Architecture',
-          'CQRS, Event Sourcing, Microservices',
-          'TDD/BDD, JUnit, Mockito',
-          'OWASP Security, OAuth2, JWT',
-          'Agile/Scrum, Technical Documentation'
-        ]
-      },
-      {
-        heading: 'Development Tools & Collaboration',
-        list: [
-          'Git, GitHub, GitLab, Bitbucket',
-          'IntelliJ IDEA, VS Code, JetBrains Suite',
-          'Jira, Confluence, Slack',
-          'Postman, Insomnia, Swagger UI',
-          'SonarQube, Code Quality & Security Analysis'
-        ]
+        icon: 'fas fa-layer-group',
+        list: ['Domain-Driven Design', 'Clean Architecture', 'CQRS', 'Event Sourcing', 'TDD / BDD', 'OAuth2 / JWT', 'Agile / Scrum']
       }
     ]
   });
@@ -187,37 +208,43 @@ export class App {
         heading: 'Banking Microservices Platform',
         content: 'Built a secure transaction processing platform for a financial services company. It handles 10M+ transactions daily with 99.95% uptime. The challenge was making it both fast and reliable - we reduced processing time by 55%.',
         technologies: ['Java 21', 'Spring Boot 3', 'Kafka', 'PostgreSQL', 'Docker', 'AWS ECS'],
-        link: '#'
+        link: '#',
+        icon: 'fas fa-landmark'
       },
       {
         heading: 'E-Commerce Angular Application',
         content: 'Created a complete e-commerce platform with real-time inventory updates, payment processing, and analytics. It serves 50K+ users daily and loads in under 2 seconds. Performance was key here.',
         technologies: ['Angular 18', 'NgRx', 'Tailwind CSS', 'Spring Boot', 'Redis', 'Stripe API'],
-        link: '#'
+        link: '#',
+        icon: 'fas fa-shopping-cart'
       },
       {
         heading: 'Real-time Analytics Dashboard',
         content: 'Developed an event-driven analytics platform with live data streaming and interactive visualizations. Processing 1M+ events per hour with sub-second latency was quite the technical challenge.',
         technologies: ['Angular', 'RxJS', 'D3.js', 'Spring Cloud', 'Kafka', 'Kubernetes'],
-        link: '#'
+        link: '#',
+        icon: 'fas fa-chart-line'
       },
       {
         heading: 'Cloud-Native SaaS Platform',
         content: 'Led the migration from a legacy monolith to cloud-native microservices. Set up CI/CD and infrastructure as code. Deployment time went from 4 hours to 15 minutes - the team was thrilled.',
         technologies: ['Java 17', 'Spring Cloud', 'Angular', 'Terraform', 'AWS', 'Jenkins'],
-        link: '#'
+        link: '#',
+        icon: 'fas fa-cloud'
       },
       {
         heading: 'Healthcare Management System',
         content: 'Built a HIPAA-compliant patient management system with strict role-based access control. Had to integrate with several legacy systems while meeting modern security standards.',
         technologies: ['Spring Boot', 'Angular', 'MongoDB', 'OAuth2', 'Docker'],
-        link: '#'
+        link: '#',
+        icon: 'fas fa-heartbeat'
       },
       {
         heading: 'API Gateway & Service Mesh',
         content: 'Designed an API gateway that handles 5M+ requests daily with rate limiting, auth, and full monitoring. Improved system observability by 80% - now the team can actually see what\'s happening.',
         technologies: ['Spring Cloud Gateway', 'Redis', 'Prometheus', 'Grafana', 'ELK Stack'],
-        link: '#'
+        link: '#',
+        icon: 'fas fa-network-wired'
       }
     ]
   });
@@ -256,6 +283,62 @@ export class App {
         heading: 'Legacy System Modernization',
         content: 'Stuck with an old monolith or outdated Angular version? I help modernize legacy systems step by step - migrating to microservices, upgrading to the latest Angular features, all while keeping your system running smoothly.',
         icon: '🔄'
+      }
+    ]
+  });
+
+  // Certifications Section
+  protected readonly certificationsSection = signal<Section<Certification>>({
+    id: 'certifications',
+    title: 'Certifications',
+    items: [
+      {
+        name: 'AWS Certified Solutions Architect – Associate',
+        issuer: 'Amazon Web Services',
+        date: 'Nov 2023',
+        credentialId: 'AWS-SAA-C03',
+        link: '#',
+        icon: 'fab fa-aws'
+      },
+      {
+        name: 'AWS Certified Developer – Associate',
+        issuer: 'Amazon Web Services',
+        date: 'Mar 2023',
+        credentialId: 'AWS-DVA-C02',
+        link: '#',
+        icon: 'fab fa-aws'
+      },
+      {
+        name: 'Spring Professional Certification',
+        issuer: 'VMware (Pivotal)',
+        date: 'Jun 2022',
+        credentialId: 'SPR-2022-00842',
+        link: '#',
+        icon: 'fas fa-leaf'
+      },
+      {
+        name: 'Certified Kubernetes Administrator (CKA)',
+        issuer: 'Cloud Native Computing Foundation',
+        date: 'Sep 2022',
+        credentialId: 'CKA-2200-008571',
+        link: '#',
+        icon: 'fas fa-dharmachakra'
+      },
+      {
+        name: 'Oracle Certified Professional: Java SE 17',
+        issuer: 'Oracle',
+        date: 'Jan 2022',
+        credentialId: 'OCP-SE17-4451',
+        link: '#',
+        icon: 'fas fa-coffee'
+      },
+      {
+        name: 'Professional Scrum Master I (PSM I)',
+        issuer: 'Scrum.org',
+        date: 'Aug 2021',
+        credentialId: 'PSM-0012345',
+        link: '#',
+        icon: 'fas fa-users-cog'
       }
     ]
   });
@@ -316,6 +399,23 @@ export class App {
   protected readonly mobileMenuOpen = signal(false);
 
   protected readonly footerText = signal('© 2026 Jodel Fokou');
+
+  protected readonly headerSurtitre = signal('Welcome to my portfolio');
+  protected readonly headerCtaText = signal('Hire Me');
+  protected readonly headerBadgeText = signal('100k+ Users Served');
+
+  protected readonly aboutSurtitre = signal('Get to know me');
+  protected readonly aboutAccroche = signal('Passionate engineer. Pragmatic problem-solver.');
+  protected readonly aboutStats = signal<AboutStat[]>([
+    { value: '8+',    label: 'Years of experience' },
+    { value: '40+',   label: 'Projects delivered' },
+    { value: '100k+', label: 'Users impacted' }
+  ]);
+  protected readonly socialLinks = signal<SocialLink[]>([
+    { label: 'LinkedIn profile', url: '#', icon: 'fab fa-linkedin-in' },
+    { label: 'GitHub profile', url: '#', icon: 'fab fa-github' },
+    { label: 'Twitter profile', url: '#', icon: 'fab fa-twitter' }
+  ]);
 
   protected scrollToSection(sectionId: string): void {
     const element = document.getElementById(sectionId);
