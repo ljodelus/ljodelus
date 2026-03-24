@@ -235,7 +235,7 @@
           <p class="text-base sm:text-lg lg:text-xl text-gray-300 font-normal leading-relaxed">{{ title() }}</p>
 
           <!-- 4. Presentation paragraph (3 lines max) -->
-          <p class="text-sm text-gray-400 leading-[1.8] line-clamp-3 max-w-lg">
+          <p class="text-sm text-gray-400 leading-[1.8] line-clamp-4 max-w-lg">
             {{ aboutSection().items[0].content }}
           </p>
 
@@ -524,93 +524,138 @@
       </section>
 
       <!-- PROJECTS SECTION -->
-      <section [id]="projectsSection().id" class="scroll-mt-24 bg-accent-900 py-12 md:py-16 lg:py-20 px-4 sm:px-6">
-        <div class="w-full max-w-[1200px] mx-auto">
-        <!-- En-tête -->
-        <h2 class="text-2xl sm:text-3xl font-bold text-white text-center">{{ projectsSection().title }}</h2>
-        <!-- Ligne décorative -->
-        <div class="w-16 h-1 rounded-sm bg-primary-500 mx-auto mt-4 mb-8 md:mb-12" aria-hidden="true"></div>
+      <section
+        [id]="projectsSection().id"
+        class="scroll-mt-15 bg-accent-900 py-12 md:py-16 lg:py-20"
+        aria-labelledby="projects-heading">
 
-        <!-- Grille de cartes -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          @for (project of projectsSection().items; track project.heading) {
-            <article
-              class="group flex flex-col bg-accent-800 rounded-xl overflow-hidden
-                     border border-slate-700 border-t-2 border-t-transparent
-                     hover:border-t-primary-500 transition-[border-top-color] duration-300"
-              [attr.aria-label]="project.heading">
+        <div class="w-full max-w-[1200px] mx-auto px-4 sm:px-8">
 
-              <!-- Corps de carte -->
-              <div class="p-6 flex-1 flex flex-col">
+          <!-- Section header -->
+          <div class="text-center mb-10 md:mb-14">
+            <h2
+              id="projects-heading"
+              class="font-bold text-white leading-tight text-2xl sm:text-3xl">
+              {{ projectsSection().title }}
+            </h2>
+            <div
+              class="bg-primary-500 mx-auto mt-3"
+              style="width: 64px; height: 4px; border-radius: 2px;"
+              aria-hidden="true"></div>
+          </div>
 
-                <!-- Ligne icône + lien externe -->
-                <div class="flex justify-between items-start">
-                  <!-- Icône projet -->
-                  <div
-                    class="w-11 h-11 rounded-lg flex items-center justify-center bg-primary-500/15"
-                    aria-hidden="true">
-                    @if (project.icon) {
-                      <i [class]="project.icon + ' text-primary-500'" style="font-size:22px" aria-hidden="true"></i>
-                    }
-                  </div>
-                  <!-- Lien externe (coin supérieur droit) -->
-                  @if (project.link) {
-                    <a
-                      [href]="project.link"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="p-1 rounded text-slate-500 group-hover:text-primary-500
-                             transition-colors duration-300
-                             focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      [attr.aria-label]="'Ouvrir ' + project.heading + ' dans un nouvel onglet'">
-                      <i class="fas fa-external-link-alt" style="font-size:18px" aria-hidden="true"></i>
-                    </a>
+          <!-- Domains list -->
+          <div class="flex flex-col gap-16">
+            @for (domain of portfolioDomains(); track domain.domaine) {
+
+              <!-- Domain group -->
+              <div>
+
+                <!-- Domain header -->
+                <div class="flex items-center gap-3 mb-8">
+                  <span class="text-2xl leading-none select-none" aria-hidden="true">{{ domain.icone }}</span>
+                  <h3
+                    class="font-semibold text-primary-400 uppercase whitespace-nowrap"
+                    style="font-size: 13px; letter-spacing: 0.12em;">
+                    {{ domain.domaine }}
+                  </h3>
+                  <div class="flex-1 h-px bg-slate-700 ml-2" aria-hidden="true"></div>
+                </div>
+
+                <!-- Projects rows -->
+                <div class="flex flex-col gap-6">
+                  @for (projet of domain.projets; track projet.name; let i = $index) {
+                    <article
+                      class="group flex flex-col md:flex-row bg-accent-800 rounded-xl overflow-hidden
+                             border border-slate-700 hover:border-primary-500/40 transition-colors duration-300"
+                      [attr.aria-label]="projet.name + (projet.proprietaire !== '~' ? ' — ' + projet.proprietaire : '')">
+
+                      <!-- Preview panel (left on even rows, right on odd rows at md+) -->
+                      <div
+                        [class]="previewPanelClasses(i)"
+                        style="min-height: 220px;">
+
+                        <img
+                          [src]="projet.preview"
+                          [alt]="projet.name + ' — application preview'"
+                          class="absolute inset-0 w-full h-full object-cover transition-transform duration-500
+                                 group-hover:scale-105">
+
+                        <!-- Gradient overlay -->
+                        <div
+                          class="absolute inset-0 bg-gradient-to-t from-accent-900/70 via-transparent to-transparent
+                                 pointer-events-none"
+                          aria-hidden="true"></div>
+
+                        <!-- Owner badge -->
+                        @if (projet.proprietaire !== '~') {
+                          <div class="absolute bottom-3 left-3 pointer-events-none" aria-hidden="true">
+                            <span
+                              class="bg-accent-900/80 text-primary-400 border border-primary-500/30 backdrop-blur-sm font-medium"
+                              style="border-radius: 50px; padding: 3px 10px; font-size: 11px;">
+                              {{ projet.proprietaire }}
+                            </span>
+                          </div>
+                        }
+                      </div>
+
+                      <!-- Content panel -->
+                      <div class="flex-1 flex flex-col gap-4 p-6 sm:p-8">
+
+                        <!-- Name + external link -->
+                        <div class="flex items-start justify-between gap-3">
+                          <div>
+                            <h4 class="text-xl font-bold text-white leading-tight">{{ projet.name }}</h4>
+                            @if (projet.lieu !== '~') {
+                              <p
+                                class="flex items-center gap-1.5 text-slate-400 mt-1.5"
+                                style="font-size: 13px;">
+                                <i class="fas fa-map-marker-alt text-primary-500/70 text-xs" aria-hidden="true"></i>
+                                {{ projet.lieu }}
+                              </p>
+                            }
+                          </div>
+                          <a
+                            [href]="projet.lien"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="shrink-0 w-9 h-9 rounded-lg bg-accent-700 flex items-center justify-center
+                                   text-slate-400 hover:bg-primary-500/20 hover:text-primary-500
+                                   transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
+                            [attr.aria-label]="'View ' + projet.name + ' (new tab)'">
+                            <i class="fas fa-external-link-alt text-sm" aria-hidden="true"></i>
+                          </a>
+                        </div>
+
+                        <!-- Description -->
+                        <p class="text-slate-400 leading-[1.8] line-clamp-3 flex-1" style="font-size: 14px;">
+                          {{ projet.description }}
+                        </p>
+
+                        <!-- Stack pills -->
+                        <ul
+                          class="flex flex-wrap gap-1.5 list-none p-0 m-0"
+                          [attr.aria-label]="'Technologies used: ' + projet.name">
+                          @for (stack of projet.stacks; track stack) {
+                            <li
+                              class="bg-accent-900 text-slate-400 border border-slate-700
+                                     hover:border-primary-500/60 hover:text-primary-400
+                                     transition-colors cursor-default leading-none"
+                              style="border-radius: 50px; padding: 5px 12px; font-size: 12px;">
+                              {{ stack }}
+                            </li>
+                          }
+                        </ul>
+
+                      </div>
+                    </article>
                   }
                 </div>
 
-                <!-- Titre du projet -->
-                <h3 class="text-[17px] font-medium text-white mt-4">{{ project.heading }}</h3>
-
-                <!-- Description (3 lignes max) -->
-                @if (project.content) {
-                  <p class="text-sm leading-7 text-slate-400 mt-2 line-clamp-3">{{ project.content }}</p>
-                }
               </div>
+            }
+          </div>
 
-              <!-- Pied de carte -->
-              <div class="px-6 py-4 border-t border-slate-700">
-                <!-- Pills technologies -->
-                @if (project.technologies) {
-                  <div class="flex flex-wrap gap-1.5" role="list" [attr.aria-label]="'Technologies : ' + project.heading">
-                    @for (tech of project.technologies; track tech) {
-                      <span
-                        class="bg-accent-900 rounded-full px-3 py-1 text-xs text-slate-400 border border-slate-700"
-                        role="listitem">
-                        {{ tech }}
-                      </span>
-                    }
-                  </div>
-                }
-
-                <!-- Lien projet -->
-                @if (project.link) {
-                  <a
-                    [href]="project.link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="inline-flex items-center gap-1 mt-3 no-underline
-                           text-[13px] font-medium text-primary-500
-                           hover:underline hover:text-primary-400
-                           transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 rounded"
-                    [attr.aria-label]="'Voir le projet : ' + project.heading">
-                    Voir le projet
-                    <i class="fas fa-arrow-up-right-from-square" style="font-size:14px" aria-hidden="true"></i>
-                  </a>
-                }
-              </div>
-            </article>
-          }
-        </div>
         </div>
       </section>
 

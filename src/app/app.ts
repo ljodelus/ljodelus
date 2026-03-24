@@ -17,6 +17,22 @@ interface Project extends BaseItem {
   icon?: string;
 }
 
+interface PortfolioProject {
+  name: string;
+  proprietaire: string;
+  lieu: string;
+  lien: string;
+  preview: string;
+  description: string;
+  stacks: string[];
+}
+
+interface PortfolioDomain {
+  domaine: string;
+  icone: string;
+  projets: PortfolioProject[];
+}
+
 interface Service extends BaseItem {
   icon?: string;
 }
@@ -203,51 +219,129 @@ export class App {
   protected readonly projectsSection = signal<Section<Project>>({
     id: 'projects',
     title: 'Featured Projects',
-    items: [
-      {
-        heading: 'Banking Microservices Platform',
-        content: 'Built a secure transaction processing platform for a financial services company. It handles 10M+ transactions daily with 99.95% uptime. The challenge was making it both fast and reliable - we reduced processing time by 55%.',
-        technologies: ['Java 21', 'Spring Boot 3', 'Kafka', 'PostgreSQL', 'Docker', 'AWS ECS'],
-        link: '#',
-        icon: 'fas fa-landmark'
-      },
-      {
-        heading: 'E-Commerce Angular Application',
-        content: 'Created a complete e-commerce platform with real-time inventory updates, payment processing, and analytics. It serves 50K+ users daily and loads in under 2 seconds. Performance was key here.',
-        technologies: ['Angular 18', 'NgRx', 'Tailwind CSS', 'Spring Boot', 'Redis', 'Stripe API'],
-        link: '#',
-        icon: 'fas fa-shopping-cart'
-      },
-      {
-        heading: 'Real-time Analytics Dashboard',
-        content: 'Developed an event-driven analytics platform with live data streaming and interactive visualizations. Processing 1M+ events per hour with sub-second latency was quite the technical challenge.',
-        technologies: ['Angular', 'RxJS', 'D3.js', 'Spring Cloud', 'Kafka', 'Kubernetes'],
-        link: '#',
-        icon: 'fas fa-chart-line'
-      },
-      {
-        heading: 'Cloud-Native SaaS Platform',
-        content: 'Led the migration from a legacy monolith to cloud-native microservices. Set up CI/CD and infrastructure as code. Deployment time went from 4 hours to 15 minutes - the team was thrilled.',
-        technologies: ['Java 17', 'Spring Cloud', 'Angular', 'Terraform', 'AWS', 'Jenkins'],
-        link: '#',
-        icon: 'fas fa-cloud'
-      },
-      {
-        heading: 'Healthcare Management System',
-        content: 'Built a HIPAA-compliant patient management system with strict role-based access control. Had to integrate with several legacy systems while meeting modern security standards.',
-        technologies: ['Spring Boot', 'Angular', 'MongoDB', 'OAuth2', 'Docker'],
-        link: '#',
-        icon: 'fas fa-heartbeat'
-      },
-      {
-        heading: 'API Gateway & Service Mesh',
-        content: 'Designed an API gateway that handles 5M+ requests daily with rate limiting, auth, and full monitoring. Improved system observability by 80% - now the team can actually see what\'s happening.',
-        technologies: ['Spring Cloud Gateway', 'Redis', 'Prometheus', 'Grafana', 'ELK Stack'],
-        link: '#',
-        icon: 'fas fa-network-wired'
-      }
-    ]
+    items: []
   });
+
+  // Portfolio domains — used by the projects section template
+  protected readonly portfolioDomains = signal<PortfolioDomain[]>([
+    {
+      domaine: 'Document Management & Business Processes',
+      icone: '🗂️',
+      projets: [
+        {
+          name: 'Ashscan',
+          proprietaire: 'Ashdown',
+          lieu: 'Yaoundé, Cameroon',
+          lien: 'https://ashscan.ashdown.cm',
+          preview: 'projects/ashscan-preview.png',
+          description: 'An intelligent document digitization platform designed to automate capture, processing, and large-scale archiving. A core tool for driving digital transformation within organizations.',
+          stacks: ['Django', 'Python', 'Celery', 'Angular', 'REST API', 'Docker', 'PostgreSQL', 'GitHub Actions']
+        },
+        {
+          name: 'Ashflow',
+          proprietaire: 'Ashdown',
+          lieu: 'Yaoundé, Cameroon',
+          lien: 'https://ashflow.ashdown.cm',
+          preview: 'projects/ashflow/processus.PNG',
+          description: 'A business process management application integrating BPMN standards and Gantt charts. Designed to provide a clear, actionable view of workflows across the organization.',
+          stacks: ['Angular', 'BPMN.js', 'Django', 'Python', 'Docker', 'PostgreSQL', 'GitHub Actions']
+        }
+      ]
+    },
+    {
+      domaine: 'Human Resources Management',
+      icone: '👥',
+      projets: [
+        {
+          name: 'AshRH',
+          proprietaire: 'Ashdown',
+          lieu: 'Yaoundé, Cameroon',
+          lien: 'https://ashrh.ashdown.cm',
+          preview: 'projects/ashrh-preview.png',
+          description: 'A comprehensive HR solution covering employee management, contracts, and administrative processes. Built to centralize and streamline the day-to-day operations of HR teams.',
+          stacks: ['Angular', 'Django', 'Python', 'BPMN.js', 'Docker', 'PostgreSQL', 'GitHub Actions']
+        },
+        {
+          name: 'Digital HR',
+          proprietaire: 'Upwork',
+          lieu: 'Upwork (freelance)',
+          lien: 'https://dev.app.godigitalhr.com',
+          preview: 'projects/digitalhr/acceuil.png',
+          description: 'An advanced HR application featuring granular calendar management by employee type, along with tracking of leave, attendance, and absences. Built for distributed teams and complex organizational structures.',
+          stacks: ['Angular', 'REST API', 'Docker', 'GitHub Actions']
+        }
+      ]
+    },
+    {
+      domaine: 'Healthcare',
+      icone: '🏥',
+      projets: [
+        {
+          name: 'CSU',
+          proprietaire: 'SUCAM',
+          lieu: 'Yaoundé, Cameroon',
+          lien: 'https://csu.sucam.cm',
+          preview: 'projects/csu-preview.png',
+          description: 'A management system for Universal Health Coverage in Cameroon. A mission-critical platform deployed as microservices to manage entitlements, affiliations, and reimbursements at a national scale.',
+          stacks: ['Angular', 'Spring Boot', 'Java', 'Kubernetes', 'Docker', 'Microservices', 'Kafka', 'PostgreSQL', 'Nginx', 'Grafana', 'Prometheus', 'GitHub Actions']
+        }
+      ]
+    },
+    {
+      domaine: 'Transport & Logistics',
+      icone: '🚢',
+      projets: [
+        {
+          name: 'CAMSIS',
+          proprietaire: 'Campass',
+          lieu: 'Douala, Cameroon',
+          lien: 'https://camsis.campass.cm',
+          preview: 'projects/camsis-preview.png',
+          description: 'A maritime freight and customs clearance management platform for Cameroon. Designed to digitize and accelerate port operations with a robust, scalable architecture.',
+          stacks: ['Angular', 'Spring Boot', 'Java', 'Microservices', 'Docker', 'Kubernetes', 'PostgreSQL', 'Grafana', 'GitHub Actions']
+        },
+        {
+          name: 'Buspro',
+          proprietaire: 'Upwork',
+          lieu: 'Upwork (freelance)',
+          lien: 'https://buspro.upwork-projects.io',
+          preview: 'projects/buspro-preview.png',
+          description: 'An urban transport management application for managing stations, buses, and online ticket booking. A solution designed to modernize mobility in African cities.',
+          stacks: ['Angular', 'Spring Boot', 'Java', 'Microservices', 'Docker', 'Kubernetes', 'PostgreSQL', 'GitHub Actions']
+        }
+      ]
+    },
+    {
+      domaine: 'Telecommunications & Mobile Services',
+      icone: '📱',
+      projets: [
+        {
+          name: 'SmartR',
+          proprietaire: 'Cateli',
+          lieu: 'Ivory Coast',
+          lien: 'https://smartr.cateli.ci',
+          preview: 'projects/smartr-preview.png',
+          description: 'A mobile top-up application allowing users to perform phone credit transactions quickly and securely. Deployed in production within a microservices environment.',
+          stacks: ['Angular', 'Spring Boot', 'Java', 'Microservices', 'Docker', 'Kubernetes', 'PostgreSQL', 'Grafana', 'Prometheus', 'GitHub Actions']
+        }
+      ]
+    },
+    {
+      domaine: 'Confidential Projects',
+      icone: '🔒',
+      projets: [
+        {
+          name: 'Confidential Projects',
+          proprietaire: '~',
+          lieu: '~',
+          lien: '#',
+          preview: 'projects/confidential-preview.png',
+          description: 'A set of projects delivered under non-disclosure agreements. While I cannot share the details, these engagements were real accelerators — distributed architecture, container orchestration, observability, and large-scale CI/CD. Experiences that have greatly shaped my expertise.',
+          stacks: ['Angular', 'Spring Boot', 'Microservices', 'Kubernetes', 'Docker', 'Grafana', 'Prometheus', 'Jenkins']
+        }
+      ]
+    }
+  ]);
 
   // Services Section
   protected readonly servicesSection = signal<Section<Service>>({
@@ -412,10 +506,16 @@ export class App {
     { value: '100k+', label: 'Users impacted' }
   ]);
   protected readonly socialLinks = signal<SocialLink[]>([
-    { label: 'LinkedIn profile', url: '#', icon: 'fab fa-linkedin-in' },
-    { label: 'GitHub profile', url: '#', icon: 'fab fa-github' },
-    { label: 'Twitter profile', url: '#', icon: 'fab fa-twitter' }
+    { label: 'LinkedIn profile', url: 'https://www.linkedin.com/in/jodel-fokou-kemta/', icon: 'fab fa-linkedin-in' },
+    { label: 'GitHub profile', url: 'https://github.com/ljodelus', icon: 'fab fa-github' },
+    { label: 'Twitter profile', url: 'https://x.com/ljodelus', icon: 'fab fa-twitter' }
   ]);
+
+  /** Returns Tailwind classes for the preview panel — alternates image to the right on odd rows. */
+  protected previewPanelClasses(index: number): string {
+    const base = 'relative w-full md:w-2/5 shrink-0 overflow-hidden bg-accent-700';
+    return index % 2 !== 0 ? `${base} md:order-last` : base;
+  }
 
   protected scrollToSection(sectionId: string): void {
     const element = document.getElementById(sectionId);
