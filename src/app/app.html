@@ -45,11 +45,11 @@
         </li>
         <li>
           <button
-            (click)="scrollToSection(experienceSection().id)"
+            (click)="scrollToSection(servicesSection().id)"
             class="text-white/90 hover:text-accent-900 hover:bg-white/20 font-medium text-sm px-3 py-2
                    rounded-sm transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset"
-            [attr.aria-label]="'Navigate to ' + experienceSection().title">
-            {{ experienceSection().title }}
+            [attr.aria-label]="'Navigate to ' + servicesSection().title">
+            {{ servicesSection().title }}
           </button>
         </li>
         <li>
@@ -63,29 +63,11 @@
         </li>
         <li>
           <button
-            (click)="scrollToSection(servicesSection().id)"
-            class="text-white/90 hover:text-accent-900 hover:bg-white/20 font-medium text-sm px-3 py-2
-                   rounded-sm transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset"
-            [attr.aria-label]="'Navigate to ' + servicesSection().title">
-            {{ servicesSection().title }}
-          </button>
-        </li>
-        <li>
-          <button
             (click)="scrollToSection(certificationsSection().id)"
             class="text-white/90 hover:text-accent-900 hover:bg-white/20 font-medium text-sm px-3 py-2
                    rounded-sm transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset"
             [attr.aria-label]="'Navigate to ' + certificationsSection().title">
             {{ certificationsSection().title }}
-          </button>
-        </li>
-        <li>
-          <button
-            (click)="scrollToSection(testimonialsSection().id)"
-            class="text-white/90 hover:text-accent-900 hover:bg-white/20 font-medium text-sm px-3 py-2
-                   rounded-sm transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset"
-            [attr.aria-label]="'Navigate to ' + testimonialsSection().title">
-            {{ testimonialsSection().title }}
           </button>
         </li>
         <li>
@@ -138,12 +120,12 @@
           </li>
           <li>
             <button
-              (click)="scrollToSection(experienceSection().id)"
+              (click)="scrollToSection(servicesSection().id)"
               class="w-full text-left text-white hover:bg-primary-600 transition-colors font-medium
                      focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
-              [attr.aria-label]="'Navigate to ' + experienceSection().title">
-              <i class="fas fa-briefcase mr-3 w-5" aria-hidden="true"></i>
-              {{ experienceSection().title }}
+              [attr.aria-label]="'Navigate to ' + servicesSection().title">
+              <i class="fas fa-hands-helping mr-3 w-5" aria-hidden="true"></i>
+              {{ servicesSection().title }}
             </button>
           </li>
           <li>
@@ -158,32 +140,12 @@
           </li>
           <li>
             <button
-              (click)="scrollToSection(servicesSection().id)"
-              class="w-full text-left text-white hover:bg-primary-600 transition-colors font-medium
-                     focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
-              [attr.aria-label]="'Navigate to ' + servicesSection().title">
-              <i class="fas fa-hands-helping mr-3 w-5" aria-hidden="true"></i>
-              {{ servicesSection().title }}
-            </button>
-          </li>
-          <li>
-            <button
               (click)="scrollToSection(certificationsSection().id)"
               class="w-full text-left text-white hover:bg-primary-600 transition-colors font-medium
                      focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
               [attr.aria-label]="'Navigate to ' + certificationsSection().title">
               <i class="fas fa-certificate mr-3 w-5" aria-hidden="true"></i>
               {{ certificationsSection().title }}
-            </button>
-          </li>
-          <li>
-            <button
-              (click)="scrollToSection(testimonialsSection().id)"
-              class="w-full text-left text-white hover:bg-primary-600 transition-colors font-medium
-                     focus:outline-none focus:ring-2 focus:ring-white focus:ring-inset rounded-sm px-4 py-3"
-              [attr.aria-label]="'Navigate to ' + testimonialsSection().title">
-              <i class="fas fa-comments mr-3 w-5" aria-hidden="true"></i>
-              {{ testimonialsSection().title }}
             </button>
           </li>
           <li>
@@ -452,20 +414,20 @@
         </div>
       </section>
 
-      <!-- PROFESSIONAL EXPERIENCE SECTION -->
+      <!-- SERVICES SECTION -->
       <section
-        [id]="experienceSection().id"
+        [id]="servicesSection().id"
         class="scroll-mt-15 w-full bg-accent-50 py-12 md:py-16 lg:py-20"
-        aria-labelledby="experience-heading">
+        aria-labelledby="services-heading">
 
-        <div class="w-full max-w-[900px] mx-auto px-4 sm:px-8">
+        <div class="w-full max-w-[1200px] mx-auto px-4 sm:px-8">
 
           <!-- Section header -->
           <div class="text-center mb-8 md:mb-12">
             <h2
-              id="experience-heading"
+              id="services-heading"
               class="font-bold text-accent-900 leading-tight text-2xl sm:text-3xl">
-              {{ experienceSection().title }}
+              {{ servicesSection().title }}
             </h2>
             <div
               class="bg-primary-500 mx-auto mt-3"
@@ -473,49 +435,48 @@
               aria-hidden="true"></div>
           </div>
 
-          <!-- Cards list -->
-          <div class="flex flex-col" style="gap: 24px;">
-            @for (item of experienceSection().items; track item.heading) {
+          <!-- Cards grid -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2"
+            style="gap: 24px;"
+            role="list">
+            @for (service of servicesSection().items; track service.heading) {
               <article
-                class="bg-white border-l-4 border-primary-500 px-4 py-5 sm:px-8 sm:py-7"
-                style="border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06);"
-                [attr.aria-label]="item.heading">
+                class="group bg-white border-l-4 border-primary-500 hover:border-primary-600
+                       transition-[border-left-color] duration-200"
+                style="border-radius: 12px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06);"
+                [attr.aria-label]="service.heading"
+                role="listitem">
 
-                <!-- Job title / company / dates -->
-                <h3
-                  class="font-bold text-accent-900 leading-snug"
-                  style="font-size: clamp(16px, 2.5vw, 18px);">
-                  {{ item.heading }}
-                </h3>
+                <div class="flex items-start" style="gap: 20px;">
 
-                <!-- Context paragraph -->
-                @if (item.content) {
-                  <p
-                    class="text-accent-700 leading-[1.8]"
-                    style="font-size: 14px; margin-top: 12px;">
-                    {{ item.content }}
-                  </p>
-                }
+                  <!-- Icon block -->
+                  @if (service.icon) {
+                    <div
+                      class="flex items-center justify-center shrink-0 bg-primary-100"
+                      style="width: 56px; height: 56px; border-radius: 10px; font-size: 28px;"
+                      aria-hidden="true">
+                      {{ service.icon }}
+                    </div>
+                  }
 
-                <!-- Achievements list -->
-                @if (item.list) {
-                  <ul class="flex flex-col list-none p-0 m-0" style="margin-top: 16px; gap: 10px;">
-                    @for (point of item.list; track point) {
-                      <li class="flex items-start" style="gap: 10px;">
-                        <span
-                          class="shrink-0 rounded-full bg-primary-500"
-                          style="width: 8px; height: 8px; margin-top: 6px;"
-                          aria-hidden="true"></span>
-                        <span
-                          class="text-accent-800 leading-[1.7]"
-                          style="font-size: 14px;">
-                          {{ point }}
-                        </span>
-                      </li>
+                  <!-- Text block -->
+                  <div class="flex-1">
+                    <h3
+                      class="font-bold text-accent-900"
+                      style="font-size: 18px; margin-bottom: 10px;">
+                      {{ service.heading }}
+                    </h3>
+                    @if (service.content) {
+                      <p
+                        class="text-accent-700 leading-[1.8] line-clamp-5 text-justify"
+                        style="font-size: 14px;">
+                        {{ service.content }}
+                      </p>
                     }
-                  </ul>
-                }
+                  </div>
 
+                </div>
               </article>
             }
           </div>
@@ -615,16 +576,18 @@
                               </p>
                             }
                           </div>
-                          <a
-                            [href]="projet.lien"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="shrink-0 w-9 h-9 rounded-lg bg-accent-700 flex items-center justify-center
-                                   text-slate-400 hover:bg-primary-500/20 hover:text-primary-500
-                                   transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
-                            [attr.aria-label]="'View ' + projet.name + ' (new tab)'">
-                            <i class="fas fa-external-link-alt text-sm" aria-hidden="true"></i>
-                          </a>
+                          @if (projet.lien && projet.lien !== '#') {
+                            <a
+                              [href]="projet.lien"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="shrink-0 w-9 h-9 rounded-lg bg-accent-700 flex items-center justify-center
+                                     text-slate-400 hover:bg-primary-500/20 hover:text-primary-500
+                                     transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
+                              [attr.aria-label]="'View ' + projet.name + ' (new tab)'">
+                              <i class="fas fa-external-link-alt text-sm" aria-hidden="true"></i>
+                            </a>
+                          }
                         </div>
 
                         <!-- Description -->
@@ -653,76 +616,6 @@
                 </div>
 
               </div>
-            }
-          </div>
-
-        </div>
-      </section>
-
-      <!-- SERVICES SECTION -->
-      <section
-        [id]="servicesSection().id"
-        class="scroll-mt-15 w-full bg-accent-50 py-12 md:py-16 lg:py-20"
-        aria-labelledby="services-heading">
-
-        <div class="w-full max-w-[1200px] mx-auto px-4 sm:px-8">
-
-          <!-- Section header -->
-          <div class="text-center mb-8 md:mb-12">
-            <h2
-              id="services-heading"
-              class="font-bold text-accent-900 leading-tight text-2xl sm:text-3xl">
-              {{ servicesSection().title }}
-            </h2>
-            <div
-              class="bg-primary-500 mx-auto mt-3"
-              style="width: 64px; height: 4px; border-radius: 2px;"
-              aria-hidden="true"></div>
-          </div>
-
-          <!-- Cards grid -->
-          <div
-            class="grid grid-cols-1 md:grid-cols-2"
-            style="gap: 24px;"
-            role="list">
-            @for (service of servicesSection().items; track service.heading) {
-              <article
-                class="group bg-white border-l-4 border-primary-500 hover:border-primary-600
-                       transition-[border-left-color] duration-200"
-                style="border-radius: 12px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06);"
-                [attr.aria-label]="service.heading"
-                role="listitem">
-
-                <div class="flex items-start" style="gap: 20px;">
-
-                  <!-- Icon block -->
-                  @if (service.icon) {
-                    <div
-                      class="flex items-center justify-center shrink-0 bg-primary-100"
-                      style="width: 56px; height: 56px; border-radius: 10px; font-size: 28px;"
-                      aria-hidden="true">
-                      {{ service.icon }}
-                    </div>
-                  }
-
-                  <!-- Text block -->
-                  <div class="flex-1">
-                    <h3
-                      class="font-bold text-accent-900"
-                      style="font-size: 18px; margin-bottom: 10px;">
-                      {{ service.heading }}
-                    </h3>
-                    @if (service.content) {
-                      <p
-                        class="text-accent-700 leading-[1.8] line-clamp-5 text-justify"
-                        style="font-size: 14px;">
-                        {{ service.content }}
-                      </p>
-                    }
-                  </div>
-
-                </div>
-              </article>
             }
           </div>
 
@@ -824,74 +717,6 @@
                   </a>
                 }
 
-              </article>
-            }
-          </div>
-
-        </div>
-      </section>
-
-      <!-- CLIENTS AND TESTIMONIALS SECTION -->
-      <section
-        [id]="testimonialsSection().id"
-        class="scroll-mt-15 w-full bg-accent-50 py-12 md:py-16 lg:py-20"
-        aria-labelledby="testimonials-heading">
-
-        <div class="w-full max-w-[1200px] mx-auto px-4 sm:px-8">
-
-          <!-- Section header -->
-          <div class="text-center mb-8 md:mb-12">
-            <h2
-              id="testimonials-heading"
-              class="font-bold text-accent-900 leading-tight text-2xl sm:text-3xl">
-              {{ testimonialsSection().title }}
-            </h2>
-            <div
-              class="bg-primary-500 mx-auto mt-3"
-              style="width: 64px; height: 4px; border-radius: 2px;"
-              aria-hidden="true"></div>
-          </div>
-
-          <!-- Cards grid -->
-          <div
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-            style="gap: 24px; align-items: stretch;">
-            @for (testimonial of testimonialsSection().items; track testimonial.name; let i = $index) {
-              <article
-                class="bg-white flex flex-col justify-between transition-shadow duration-200
-                       hover:[box-shadow:0_4px_16px_rgba(0,0,0,0.08)]"
-                [class.border]="(i % 3) !== 1"
-                [class.border-accent-200]="(i % 3) !== 1"
-                [class.border-l-4]="(i % 3) === 1"
-                [class.border-primary-500]="(i % 3) === 1"
-                style="border-radius: 12px; padding: 28px;"
-                [attr.aria-label]="testimonial.name + ', ' + testimonial.role + ' at ' + testimonial.company">
-
-                <!-- Quote block -->
-                <p
-                  class="italic text-accent-700 text-justify leading-[1.85]"
-                  style="font-size: 14px;">
-                  "{{ testimonial.content }}"
-                </p>
-
-                <!-- Separator -->
-                <hr
-                  class="border-t border-accent-200 w-full"
-                  style="margin: 20px 0;"
-                  aria-hidden="true">
-
-                <!-- Author block -->
-                <div>
-                  <p class="font-bold text-accent-900" style="font-size: 15px;">
-                    {{ testimonial.name }}
-                  </p>
-                  <p class="text-accent-600" style="font-size: 13px; margin-top: 2px;">
-                    {{ testimonial.role }}
-                  </p>
-                  <p class="text-primary-600" style="font-size: 13px; margin-top: 2px;">
-                    {{ testimonial.company }}
-                  </p>
-                </div>
 
               </article>
             }

@@ -46,13 +46,6 @@ interface Certification {
   icon: string;
 }
 
-interface Testimonial {
-  name: string;
-  role: string;
-  company: string;
-  content: string;
-  image?: string;
-}
 
 interface AboutItem {
   content: string;
@@ -76,7 +69,7 @@ interface SocialLink {
 }
 
 // Union type for different section types
-type SectionItem = BaseItem | Project | Service | Testimonial | AboutItem | SkillCategory;
+type SectionItem = BaseItem | Project | Service | AboutItem | SkillCategory;
 
 interface Section<T = SectionItem> {
   id: string;
@@ -177,43 +170,6 @@ export class App {
     ]
   });
 
-  // Professional Experience Section
-  protected readonly experienceSection = signal<Section<BaseItem>>({
-    id: 'experience',
-    title: 'Professional Experience',
-    items: [
-      {
-        heading: 'Senior Fullstack Developer - Enterprise Solutions (2022 - Present)',
-        content: 'Currently leading the migration from a monolithic system to Spring Boot microservices for a financial services company. It\'s been challenging but rewarding - we\'ve cut deployment time by 70% and achieved 99.9% uptime.',
-        list: [
-          'Improved performance by 40% through smart caching and architecture optimization',
-          'Built Angular apps that now serve 100K+ users every day',
-          'Set up CI/CD pipelines that took us from deploying weekly to deploying multiple times a day',
-          'Mentor a team of 5 developers - helping them grow while we ship great features'
-        ]
-      },
-      {
-        heading: 'Fullstack Java/Angular Developer - International Consulting (2019 - 2022)',
-        content: 'Worked with clients across banking, healthcare, and e-commerce in Europe and North America. Every project taught me something new about building systems that need to work at scale.',
-        list: [
-          'Designed a microservices platform that handles over 10M API calls per day',
-          'Led our AWS migration - not just moving servers, but rethinking how we deploy and scale',
-          'Implemented OAuth2/JWT security to meet GDPR requirements',
-          'Proud of our 95%+ client satisfaction score - building trust is as important as writing code'
-        ]
-      },
-      {
-        heading: 'Java Backend Developer - Tech Startup (2017 - 2019)',
-        content: 'Joined a small team building a SaaS product from scratch. Wore many hats and learned what it takes to scale from MVP to thousands of paying customers.',
-        list: [
-          'Built REST APIs with Spring Boot that now handle 2M+ requests daily',
-          'Spent countless hours optimizing database queries - cut response time by 60%',
-          'Introduced automated testing and got us to 85%+ code coverage',
-          'Loved the fast pace of daily standups, quick iterations, and seeing users actually use what we built'
-        ]
-      }
-    ]
-  });
 
   // Projects Section (Portfolio)
   protected readonly projectsSection = signal<Section<Project>>({
@@ -232,8 +188,8 @@ export class App {
           name: 'Ashscan',
           proprietaire: 'Ashdown',
           lieu: 'Yaoundé, Cameroon',
-          lien: 'https://ashscan.ashdown.cm',
-          preview: 'projects/ashscan-preview.png',
+          lien: '',
+          preview: 'projects/ashscan/dashboard.png',
           description: 'An intelligent document digitization platform designed to automate capture, processing, and large-scale archiving. A core tool for driving digital transformation within organizations.',
           stacks: ['Django', 'Python', 'Celery', 'Angular', 'REST API', 'Docker', 'PostgreSQL', 'GitHub Actions']
         },
@@ -241,7 +197,7 @@ export class App {
           name: 'Ashflow',
           proprietaire: 'Ashdown',
           lieu: 'Yaoundé, Cameroon',
-          lien: 'https://ashflow.ashdown.cm',
+          lien: '',
           preview: 'projects/ashflow/processus.PNG',
           description: 'A business process management application integrating BPMN standards and Gantt charts. Designed to provide a clear, actionable view of workflows across the organization.',
           stacks: ['Angular', 'BPMN.js', 'Django', 'Python', 'Docker', 'PostgreSQL', 'GitHub Actions']
@@ -256,15 +212,15 @@ export class App {
           name: 'AshRH',
           proprietaire: 'Ashdown',
           lieu: 'Yaoundé, Cameroon',
-          lien: 'https://ashrh.ashdown.cm',
+          lien: '',
           preview: 'projects/ashrh-preview.png',
           description: 'A comprehensive HR solution covering employee management, contracts, and administrative processes. Built to centralize and streamline the day-to-day operations of HR teams.',
           stacks: ['Angular', 'Django', 'Python', 'BPMN.js', 'Docker', 'PostgreSQL', 'GitHub Actions']
         },
         {
           name: 'Digital HR',
-          proprietaire: 'Upwork',
-          lieu: 'Upwork (freelance)',
+          proprietaire: 'Freelance',
+          lieu: '(freelance)',
           lien: 'https://dev.app.godigitalhr.com',
           preview: 'projects/digitalhr/acceuil.png',
           description: 'An advanced HR application featuring granular calendar management by employee type, along with tracking of leave, attendance, and absences. Built for distributed teams and complex organizational structures.',
@@ -280,7 +236,7 @@ export class App {
           name: 'CSU',
           proprietaire: 'SUCAM',
           lieu: 'Yaoundé, Cameroon',
-          lien: 'https://csu.sucam.cm',
+          lien: 'https://hopi.csu.cm',
           preview: 'projects/csu-preview.png',
           description: 'A management system for Universal Health Coverage in Cameroon. A mission-critical platform deployed as microservices to manage entitlements, affiliations, and reimbursements at a national scale.',
           stacks: ['Angular', 'Spring Boot', 'Java', 'Kubernetes', 'Docker', 'Microservices', 'Kafka', 'PostgreSQL', 'Nginx', 'Grafana', 'Prometheus', 'GitHub Actions']
@@ -302,9 +258,9 @@ export class App {
         },
         {
           name: 'Buspro',
-          proprietaire: 'Upwork',
-          lieu: 'Upwork (freelance)',
-          lien: 'https://buspro.upwork-projects.io',
+          proprietaire: 'Freelance',
+          lieu: '(freelance)',
+          lien: 'https://albosta.io',
           preview: 'projects/buspro-preview.png',
           description: 'An urban transport management application for managing stations, buses, and online ticket booking. A solution designed to modernize mobility in African cities.',
           stacks: ['Angular', 'Spring Boot', 'Java', 'Microservices', 'Docker', 'Kubernetes', 'PostgreSQL', 'GitHub Actions']
@@ -387,18 +343,26 @@ export class App {
     title: 'Certifications',
     items: [
       {
+        name: 'Oracle Certified Professional: Java SE 21',
+        issuer: 'Oracle',
+        date: 'Mar 2024',
+        credentialId: 'OCP-SE21-7821',
+        link: 'https://catalog-education.oracle.com/ords/certview/sharebadge?id=23D0FF27CC9AC1A193E04626D019193B0671997F09701EDDA0A0F9749D8266DE',
+        icon: 'fas fa-coffee'
+      },
+      {
+        name: 'Oracle Certified Professional: Java SE 17',
+        issuer: 'Oracle',
+        date: 'Jan 2022',
+        credentialId: 'OCP-SE17-4451',
+        link: 'https://catalog-education.oracle.com/ords/certview/sharebadge?id=CA6F2E7A62CDD7EDE66720DFA4FDCCFE2709C706A2891058C1CEB095D2A11A63',
+        icon: 'fas fa-coffee'
+      },
+      {
         name: 'AWS Certified Solutions Architect – Associate',
         issuer: 'Amazon Web Services',
         date: 'Nov 2023',
         credentialId: 'AWS-SAA-C03',
-        link: '#',
-        icon: 'fab fa-aws'
-      },
-      {
-        name: 'AWS Certified Developer – Associate',
-        issuer: 'Amazon Web Services',
-        date: 'Mar 2023',
-        credentialId: 'AWS-DVA-C02',
         link: '#',
         icon: 'fab fa-aws'
       },
@@ -419,14 +383,6 @@ export class App {
         icon: 'fas fa-dharmachakra'
       },
       {
-        name: 'Oracle Certified Professional: Java SE 17',
-        issuer: 'Oracle',
-        date: 'Jan 2022',
-        credentialId: 'OCP-SE17-4451',
-        link: '#',
-        icon: 'fas fa-coffee'
-      },
-      {
         name: 'Professional Scrum Master I (PSM I)',
         issuer: 'Scrum.org',
         date: 'Aug 2021',
@@ -437,49 +393,6 @@ export class App {
     ]
   });
 
-  // Clients and Testimonials Section
-  protected readonly testimonialsSection = signal<Section<Testimonial>>({
-    id: 'testimonials',
-    title: 'Client Testimonials',
-    items: [
-      {
-        name: 'Sarah Johnson',
-        role: 'VP Engineering',
-        company: 'FinTech Solutions Inc.',
-        content: 'Jodel led our migration to microservices and honestly, I was skeptical at first. But he delivered beyond expectations - 99.95% uptime and we cut costs by 40%. What impressed me most was how he explained complex technical decisions in terms our business team could understand.'
-      },
-      {
-        name: 'Marc Dubois',
-        role: 'CTO',
-        company: 'E-Commerce Ventures',
-        content: 'We needed our Angular app done fast, and Jodel delivered ahead of schedule. The platform handles 50K users daily without breaking a sweat. Plus, he mentored our junior devs along the way - they learned more in 3 months than in the previous year.'
-      },
-      {
-        name: 'Lisa Chen',
-        role: 'Product Director',
-        company: 'HealthTech Systems',
-        content: 'Working with Jodel on our HIPAA-compliant platform was a relief. He didn\'t just write code - he helped us navigate security requirements and compliance challenges. Very professional, always available, and genuinely cares about the project\'s success.'
-      },
-      {
-        name: 'Thomas Müller',
-        role: 'Engineering Manager',
-        company: 'Enterprise Solutions GmbH',
-        content: 'Jodel joined us as a senior dev and immediately raised the bar. He introduced clean architecture and TDD practices without being preachy about it. Now our team ships features faster with way fewer bugs. Game-changer for us.'
-      },
-      {
-        name: 'Jennifer Williams',
-        role: 'Tech Lead',
-        company: 'Digital Innovation Corp',
-        content: 'What I appreciate about Jodel is his versatility - equally strong on Java backend and Angular frontend. He doesn\'t just solve problems; he thinks ahead and builds solutions that scale. Solid technical skills paired with great communication.'
-      },
-      {
-        name: 'Pierre Laurent',
-        role: 'Founder & CEO',
-        company: 'StartupLab',
-        content: 'As a startup, we needed someone who could move fast but also build things right. Jodel helped us scale from MVP to 5000+ customers, and his architectural decisions still hold up as we keep growing. Would hire him again in a heartbeat.'
-      }
-    ]
-  });
 
   // Contact Form
   protected readonly contactForm = this.fb.group({
