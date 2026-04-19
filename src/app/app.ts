@@ -213,7 +213,7 @@ export class App {
           proprietaire: 'Ashdown',
           lieu: 'Yaoundé, Cameroon',
           lien: '',
-          preview: 'projects/ashrh-preview.png',
+          preview: 'projects/ashrh/dashboard1.png',
           description: 'A comprehensive HR solution covering employee management, contracts, and administrative processes. Built to centralize and streamline the day-to-day operations of HR teams.',
           stacks: ['Angular', 'Django', 'Python', 'BPMN.js', 'Docker', 'PostgreSQL', 'GitHub Actions']
         },
@@ -251,8 +251,8 @@ export class App {
           name: 'CAMSIS',
           proprietaire: 'Campass',
           lieu: 'Douala, Cameroon',
-          lien: 'https://camsis.campass.cm',
-          preview: 'projects/camsis-preview.png',
+          lien: 'https://ept.camcis.cm/ept/main',
+          preview: 'projects/camcis/acceuil.png',
           description: 'A maritime freight and customs clearance management platform for Cameroon. Designed to digitize and accelerate port operations with a robust, scalable architecture.',
           stacks: ['Angular', 'Spring Boot', 'Java', 'Microservices', 'Docker', 'Kubernetes', 'PostgreSQL', 'Grafana', 'GitHub Actions']
         },
